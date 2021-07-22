@@ -3,7 +3,7 @@ const path = require( 'path' );
 module.exports = {
     styleguideDir : "docs",
     
-    skipComponentsWithoutExample : true,
+    skipComponentsWithoutExample : false,
     
     require : [
         path.join( __dirname, 'node_modules/materialize-css/dist/css/materialize.min.css' ),
@@ -23,6 +23,7 @@ module.exports = {
 
     ignore : [
         '**/components/**/common.js',
+        '**/components/**/context.js',
     ],
 
     //
@@ -34,6 +35,11 @@ module.exports = {
 
     // TODO No sections yet.
     sections : [
+        {
+            name : 'jsdocs',
+            href : '../jsdocs/index.html',
+            external : true,
+        },
         {
             name : 'Components',
             content : 'src/components/components.md',

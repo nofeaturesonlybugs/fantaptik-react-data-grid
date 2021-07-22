@@ -1,0 +1,112 @@
+import React from 'react';
+
+import { checkGte } from '../js';
+
+/**
+ * The properties that can be passed to the `usePages` hook.
+ * 
+ * @typedef usePagesProps
+ * @type {Object}
+ * @property {number} [page=1] Initial page.
+ * @property {number} [perPage=25] Initial perPage.
+ * @property {number} [itemCount=1] Number of items to paginate.
+ */
+
+/**
+ * The result type for the `usePages` hook.
+ * 
+ * @typedef usePagesResult
+ * @type {Object}
+ * @property {number} perPage       Number of items to display per page.
+ * @property {number} page          Current page number.
+ * @property {number} total         Total number of pages.
+ * @property {number} itemCount     The total number of items.
+ * @property {number} itemOffset    Offset into data items for current page.
+ * @property {function} setItemCount    `result.setItemCount( 100 );        // Sets itemCount to 100.`
+ * @property {function} setPage         `result.setPage( 5 );               // Go to page #5.`
+ * @property {function} setPerPage      `result.setPerPage( 50 );           // Show 50 items per page.`
+ * @property {function} next        `result.next();         // Go to next page.`
+ * @property {function} previous    `result.previous();     // Go to previous page.`
+ * @property {function} first       `result.first();        // Go to first page.`
+ * @property {function} last        `result.last();         // Go to last page.`
+ */
+
+/**
+ * `usePages` creates a pagination management object.
+ * 
+ * @function
+ * @param {usePagesProps}  Initial `pages` hook props.
+ * @returns {usePagesResult}
+ */
+const usePages = ( { itemCount : itemCountDefault = 1, page : pageDefault = 1, perPage : perPageDefault = 25, } = {} ) => {
+    //
+    // Our incoming values need to make sense.
+    itemCountDefault = checkGte( itemCountDefault, 0 );
+    perPageDefault = checkGte( perPageDefault, 1 );
+    perPageDefault = checkGte( perPageDefault, 1 );
+    const totalDefault = Math.ceil( itemCountDefault / perPageDefault );
+    //
+    const [itemCount, stateItemCount] = React.useState( itemCountDefault );
+    const [perPage, statePerPage] = React.useState( perPageDefault );
+    const [page, statePage] = React.useState( pageDefault );
+    const [total, stateTotal] = React.useState( totalDefault );
+    //
+    const setItemCount = value => {
+        value = checkGte( value, 0 );
+        stateItemCount( value );
+        // When changing itemCount we may need to adjust total and/or page.
+        const recalcTotal = Math.ceil( value / perPage );
+        if( recalcTotal != total ) {
+            stateTotal( recalcTotal );
+        }
+        const recalcPage = page > recalcTotal ? recalcTotal : page;
+        if( recalcPage != page ) {
+            statePage( recalcPage );
+        }
+    }
+    const setPerPage = value => {
+        value = checkGte( value, 1 );
+        statePerPage( value );
+        // When changing perPage we may need to adjust total and/or page.
+        const recalcTotal = Math.ceil( itemCount / value );
+        if( recalcTotal != total ) {
+            stateTotal( recalcTotal );
+        }
+        const recalcPage = page > recalcTotal ? recalcTotal : page;
+        if( recalcPage != page ) {
+            statePage( recalcPage );
+        }
+    }
+    const setPage = value => {
+        value = checkGte( value, 1 );
+        if( value > total ) {
+            value = total;
+        }
+        statePage( value );
+    }
+    return {
+        perPage, setPerPage,
+        page, setPage,
+        itemCount, setItemCount,
+        itemOffset : (page - 1) * perPage,
+        total,
+        next : () => setPage( page + 1 ),
+        previous : () => setPage( page - 1 ),
+        first : () => setPage( 1 ),
+        last : () => setPage( total ),
+    };
+}
+
+export const usePagesContext = {
+    perPage : 1, setPerPage : perPage => null,
+    page : 1, setPage : page => null,
+    itemCount : 1, setItemCount : itemCount => null,
+    itemOffset : 0,
+    total : 1,
+    next : () => null,
+    previous : () => null,
+    first : () => null,
+    last : () => null,
+}
+
+export default usePages;

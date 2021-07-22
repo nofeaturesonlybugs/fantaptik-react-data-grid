@@ -6,5 +6,8 @@ div.data-grid {}                    /* Data grid div. */
 ```
 
 ```jsx
-<Grid />
+<Grid data={data}>
+    <Grid.Pages />
+    <Grid.Rows />
+</Grid>
 ```
