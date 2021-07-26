@@ -1,0 +1,11 @@
+div.pages .per-page {
+    margin-right: 16px;
+}
+
+div.pages.swapped .per-page {
+    margin-right: 0px;
+}
+
+div.pages.swapped .page {
+    margin-right: 16px;
+}
