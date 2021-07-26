@@ -3,20 +3,26 @@ import PropTypes from 'prop-types';
 
 import { VariableSizeGrid } from 'react-window';
 
+import { merge } from '@fantaptik/react-material';
+
+import { getColumns, ucwords } from '../../js';
+
+import '../../css/styles.css';
+
 import GridContext from '../Grid/context';
 
+const DISPLAY_HEADER = true; // TODO Display header; move to context or prop or something.
+
 const Rows = ( { className, data, width, height, ...props } ) => {
+    const [headerRef, setHeaderRef] = React.useState( null );
+    const headerCallback = React.useCallback( node => {
+        setHeaderRef( node );
+    }, [] );
+    // console.log("Rows","width",width,"height",height);//TODO RM
     data = Array.isArray( data ) ? data : [];
     //
     // Calculate/gather the columns.
-    const columns = [];
-    if( data.length > 0 ) {
-        // console.log("first-item",data[0]);//TODO RM
-        for( const key of Object.keys( data[0] ) ) {
-            // console.log("\tkey",key);//TODO RM
-            columns.push( key );
-        }
-    }
+    const { header, columns } = getColumns( data.length > 0 ? data[ 0 ] : {}, ucwords );
     //
     // TODO Better way to get id|key from items.
     const itemKey = ( { columnIndex, data, rowIndex } ) => {
@@ -24,24 +30,47 @@ const Rows = ( { className, data, width, height, ...props } ) => {
     }
     //
     // Row renderer because it needs access to columns; might be able to move later.
-    const Row = ( { columnIndex, data, rowIndex, style, ...props } ) => {
+    const Row = ( { columnIndex, data, rowIndex, style = {}, ...props } ) => {
         let value = data[rowIndex][columns[columnIndex]];
         return (
-            <div style={style}>{value}</div>
+            <div className="row" style={style}>{value}</div>
         );
     }
     //
+    const handlers = {
+        // scroll is attached to the data rows grid and updates the column header's grid scroll position.
+        scroll : ( { scrollLeft } ) => {
+            if( headerRef ) {
+                headerRef.scrollTo( { scrollLeft, scrollTop : 0 } );
+            }
+        },
+    }
     //
     // TODO className for outer div and VariableSizeGrid
+    const classes = {
+        container : merge`${className} data-grid-rows`,
+        columns : merge`${className} data-grid-columns`,
+    }
     // TODO Drop outer div?
     return (
-        <div className={className} {...props}>
+        <div className={classes.container} {...props}>
             <VariableSizeGrid
-                className={className}
-                height={height} width={width}
+                ref={headerCallback}
+                className={classes.columns}
+                height={35} width={width}
+                columnCount={columns.length} columnWidth={n => 140}
+                rowCount={1} rowHeight={n => 32}
+                itemKey={itemKey} itemData={[header]}
+                >
+                {Row}
+            </VariableSizeGrid>
+            <VariableSizeGrid
+                className={classes.container}
+                height={height - 35} width={width}
                 columnCount={columns.length} columnWidth={n => 140}
                 rowCount={data.length} rowHeight={n => 32}
                 itemKey={itemKey} itemData={data}
+                onScroll={handlers.scroll}
                 >
                 {Row}
             </VariableSizeGrid>

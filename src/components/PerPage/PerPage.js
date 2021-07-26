@@ -6,7 +6,7 @@ import { merge, Select } from '@fantaptik/react-material';
 import GridContext from '../Grid/context';
 import { checkGte } from '../../js';
 
-import './PerPage.css';
+import '../../css/styles.css';
 
 const PerPage = ( { className, disabled, perPage, values, onPerPage, ...props } ) => {
     values = Array.isArray( values ) ? values : [25, 100, 250, 500, 1000];
@@ -37,13 +37,12 @@ const ContextPerPage = ( props ) => {
         perPage, onPerPage : setPerPage,
     };
     return (
-        <PerPageBase {...props} {...passthru} />
+        <PerPage {...props} {...passthru} />
     );
 }
 
 PerPage.ContextPerPage = ContextPerPage;
 
-PerPage.displayName = 'Pages.PerPage';
 PerPage.propTypes = {
     /** Set to `true` to disable the controls. */
     disabled : PropTypes.bool,

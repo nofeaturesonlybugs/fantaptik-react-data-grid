@@ -1,0 +1,71 @@
+/**
+ * Page selection control.
+ */
+
+div.page {
+    display : inline-block;
+}
+
+.page-select {
+    margin-left: 8px;
+    margin-right: 8px;
+    display: inline-block;
+    max-width: 80px;
+}
+
+.page-select input {
+    text-align: center;
+}
+
+.page-select ul, .page-select ul li {
+    text-align: right;
+}
+
+/**
+ * PerPage selection control.
+ */
+div.per-page {
+    display: inline-block;
+}
+
+div.per-page > *{
+    display: inline-block;
+}
+
+div.per-page .per-page-select {
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: 80px;
+}
+
+div.per-page .per-page-select input {
+    text-align: center;
+}
+
+div.per-page .per-page-select ul,
+div.per-page .per-page-select ul li {
+    text-align: right;
+}
+
+/**
+ * Data grid columns
+ */
+div.data-grid-columns {
+    overflow: hidden !important;
+    background-color: #f6f6f6;
+    color: #424242;
+    font-weight: bold;
+    vertical-align: bottom;
+    border: 1px solid #eeeeee;
+    border-collapse: collapse;
+}
+
+/**
+ * Data grid rows.
+ */
+.data-grid-rows .row {
+    vertical-align: bottom;
+    /* border: 1px solid #c0c0c0; TODO RM */
+    border: 1px solid #eeeeee;
+    border-collapse: collapse;
+}
