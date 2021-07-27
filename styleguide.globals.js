@@ -12,7 +12,8 @@ import { usePages } from './src/hooks';
 import Buttons from './src/components/Buttons/Buttons';
 import Grid from './src/components/Grid/Grid';
 import Labels from './src/components/Labels/Labels';
-import Pages from './src/components/Pages/Pages';
+import Page from './src/components/Page/Page';
+import PerPage from './src/components/PerPage/PerPage';
 import Rows from './src/components/Rows/Rows';
 
 // import ChangePassword from './src/forms/ChangePassword/ChangePassword';
@@ -33,7 +34,8 @@ global.usePages = usePages;
 global.Buttons = Buttons;
 global.Grid = Grid;
 global.Labels = Labels;
-global.Pages = Pages;
+global.Page = Page;
+global.PerPage = PerPage;
 global.Rows = Rows;
 
 // global.ChangePassword = ChangePassword;

@@ -8,7 +8,7 @@ import Buttons from '../Buttons/Buttons';
 
 import { checkGte } from '../../js';
 
-import './Page.css';
+import '../../css/styles.css';
 
  const Page = ( { className, disabled, page, total, onPage, ...props } ) => {
     page = checkGte( page, 1 );
@@ -61,7 +61,6 @@ const ContextPage = ( props ) => {
 
 Page.ContextPage = ContextPage;
 
-Page.displayName = 'Pages.Page';
 Page.propTypes = {
     /** Set to `true` to disable the controls. */
     disabled : PropTypes.bool,

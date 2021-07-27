@@ -11,10 +11,7 @@ npm install @fantaptik/react-material react-window css-box-model hoist-non-react
 View the Styleguidist @ https://nofeaturesonlybugs.github.io/fantaptik-react-data-grid/
 
 ### Browser Compatibility  
-TODO Update me.
 The following browser features are required by the listed components; for highest possible compatibility consider adding appropriate PolyFills.
 
 + `ResizeObserver` is used by:
-    + `Position`, `Position.Fill`, & `useBoxFill`
-+ `Web Animations API` is used by:
-    + `SlideMenu`
+    + `Grid` via dependency `@fantaptik/react-material/Position.Fill`.

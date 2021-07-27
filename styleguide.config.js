@@ -41,6 +41,10 @@ module.exports = {
             external : true,
         },
         {
+            name : 'styling',
+            content : 'mddocs/styles.md',
+        },
+        {
             name : 'Components',
             content : 'src/components/components.md',
             components : 'src/components/**/*.js',
