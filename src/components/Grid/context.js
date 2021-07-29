@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { useDataGridContext } from '../../hooks/useDataGrid';
+import useDataGrid from '../../hooks/useDataGrid';
 
 export const initContext = {
-    ...useDataGridContext
+    ...useDataGrid.defaultResult
 }
 
 export default React.createContext( { ...initContext } );

@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>hooks/useDataGrid.js - Documentation</title>
+    <title>hooks/useView.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">hooks/useDataGrid.js</h1>
+    <h1 class="page-title">hooks/useView.js</h1>
     
 
     
@@ -44,61 +44,50 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
 
-import useData from './useData';
-import usePages from './usePages';
-import useView from './useView';
+import useColumns from './useColumns';
 
 /**
- * The result type for the `useDataGrid` hook.
+ * The properties that can be passed to the `useView` hook.
  * 
- * @typedef useDataGridResult
+ * @typedef useViewProps
  * @type {Object}
- * @property {useDataResult} data The `data` management object.
- * @property {usePagesResult} pages The `pages` management object.
- * @property {useViewResult} view The `view` management object.
+ * @property {useColumnsProps} columns Initial props to pass down to `useColumns` hook.
  */
 
 /**
- * `useDataGrid` creates a data grid management object.
+ * The result type for the `useView` hook.
  * 
- * @see {@link useData}
- * @see {@link usePages}
- * @param {Object} props The initial hook values.
- * @param {useDataProps} [props.data={}]  Initial `data` hook props; see {@link useData}.
- * @param {usePagesProps} [props.pages={}]  Initial `pages` hook props; see {@link usePages}.
- * @param {useViewProps} [props.view={}] Initial `view` hook props; see {@link useView}.
- * @returns {useDataGridResult}
+ * @typedef useViewResult
+ * @type {Object}
+ * @property {useColumnsResult} columns Management object for columns.
  */
-const useDataGrid = ( { data : dataDefault = {}, pages : pagesDefault = {}, view : viewDefault = {} } = {} ) => {
-    const data = useData( dataDefault );
-    const pages = usePages( pagesDefault );
-    const view = useView( viewDefault );
-    //
-    React.useEffect( () => {
-        pages.setItemCount( data.data.length );
-    }, [data.data] );
-    //
+
+/**
+ * `useView` creates a view management object.
+ * 
+ * @function
+ * @param {useViewProps} props Initial `view` hook props.
+ * @returns {useViewResult}
+ */
+const useView = ( { columns : columnsDefault = {} } = {} ) => {
+    const columns = useColumns( columnsDefault );
     return {
-        data,
-        pages,
-        view,
+        columns,
     };
 }
 
 /**
- * A default `useDataGridResult`.
+ * A default `useViewResult`.
  * 
- * @type {useDataGridResult}
+ * @type {useViewResult}
  */
-export const useDataGridDefaultResult = {
-    data : { ...useData.defaultResult },
-    pages : { ...usePages.defaultResult },
-    view : { ...useView.defaultResult },
+export const useViewDefaultResult = {
+    columns : { ...useColumns.defaultResult },
 }
 
-useDataGrid.defaultResult = useDataGridDefaultResult;
+useView.defaultResult = useViewDefaultResult;
 
-export default useDataGrid;</code></pre>
+export default useView;</code></pre>
         </article>
     </section>
 

@@ -12,13 +12,14 @@ import Buttons from '../Buttons/Buttons';
 import Page from '../Page/Page';
 import PerPage from '../PerPage/PerPage';
 import Rows from '../Rows/Rows';
+import SampleRow from '../SampleRow/SampleRow';
 
-const Grid = ( { autoChildren, children, className, data = [], ...props } ) => {
+const Grid = ( { autoChildren, children, className, data = [], sample = {}, ...props } ) => {
     const [containerRef, setContainerRef] = React.useState( null );
     const containerCallback = React.useCallback( node => {
         setContainerRef( node );
     }, [] );
-    const ctx = useDataGrid( { data : { data } } );
+    const ctx = useDataGrid( { data : { data, sample } } );
     //
     className = merge`${className} data-grid`;
     //
@@ -57,6 +58,7 @@ const Grid = ( { autoChildren, children, className, data = [], ...props } ) => {
     return (
         <Context.Provider value={ctx}>
             <div ref={containerCallback} className={className} {...props}>
+                <SampleRow.ContextSampleRow />
                 {children}
             </div>
         </Context.Provider>
@@ -70,6 +72,7 @@ Grid.Buttons = Buttons.ContextButtons;
 Grid.Page = Page.ContextPage;
 Grid.PerPage = PerPage.ContextPerPage;
 Grid.Rows = Rows.ContextRows;
+Grid.SampleRow = SampleRow.ContextSampleRow;
 
 Grid.propTypes = {
     /** When `true` children are automatically managed. */
@@ -77,6 +80,12 @@ Grid.propTypes = {
 
     /** The data rows to display in the grid. */
     data : PropTypes.arrayOf( PropTypes.object ),
+
+    /**
+     * A sample row representative of the data in `data`; for good column sizing set the fields in `sample`
+     * such that their values represent the longer or larger values within the data set.
+     */
+    sample : PropTypes.object,
 }
 
 Grid.defaultProps = {

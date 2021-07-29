@@ -13,27 +13,38 @@ export const checkGte = ( n, gte ) => {
 }
 
 /**
- * `getColumns` accepts a data row and returns a `{ columns, header }` where:  
- * + `columns` is a `string[]` of column names,  
- * + `header` is an object `{ key1 : key1, key2 : key2, ..., keyN : keyN }`  
- * 
- * In other words `result.columns` is the array of column names and `result.header` is an object that
- * can be used for the header row.
- * 
+ * `getColumns` accepts a data row and returns a `column[]`.  
  * @function
  * @param {Object} row A data row.
  * @param {function} transform Function to transform column name; `name => name.toLowerCase()`.
- * @returns {Object} result `{ header, columns }`
+ * @returns {column[]}
  */
 export const getColumns = ( row, transform ) => {
+    row = row || {};
     transform = transform || (name => name);
-    const header = {};
+    //
     const columns = [];
     for( const key of Object.keys( row ) ) {
-        header[ key ] = transform( key );
-        columns.push( key );
+        columns.push( { name : key, label : transform( key ), width : 0, height : 0, visible : true } );
     }
-    return { header, columns };
+    return columns;
+}
+
+/**
+ * `jsonPrintFunction` can be used as the second argument to `JSON.stringify()` to print functions.
+ * 
+ * @function
+ * @param {any} key
+ * @param {any} value 
+ * @returns string
+ */
+export const jsonPrintFunction = ( key, value ) => {
+    if( typeof value === "function" ) {
+        return value.toString().split( "\n" )[0].replace( /function ([^{]+) {.*/, (match, p1) => {
+            return p1 + " => [body]";
+        } );
+    }
+    return value;
 }
 
 /**
@@ -54,4 +65,4 @@ export const ucfirst = ( [ first, ...rest ] ) => first.toLocaleUpperCase( naviga
  */
 export const ucwords = str => str.split( /[ _-]+/g ).map( ucfirst ).join( ' ' );
 
-export default { checkGte, getColumns, ucfirst, ucwords };
+export default { checkGte, getColumns, jsonPrintFunction, ucfirst, ucwords };

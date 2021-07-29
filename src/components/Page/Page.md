@@ -2,7 +2,7 @@
 
 Non-empty page.
 ```jsx
-<Page total={100} perPage={10} page={3} />
+<Page total={100} page={3} />
 ```
 
 Event handling.
@@ -10,6 +10,6 @@ Event handling.
 const [page, updatePage] = React.useState( 3 );
 <>
     <p>Page is {page}</p>
-    <Page total={100} perPage={9} page={page} onPage={updatePage} />
+    <Page total={100} page={page} onPage={updatePage} />
 </>
 ```

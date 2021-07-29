@@ -45,6 +45,14 @@ module.exports = {
             content : 'mddocs/styles.md',
         },
         {
+            name : 'hooks',
+            content : 'mddocs/hooks.md',
+        },
+        {
+            name : 'isolated',
+            content : 'mddocs/isolate.md',
+        },
+        {
             name : 'Components',
             content : 'src/components/components.md',
             components : 'src/components/**/*.js',

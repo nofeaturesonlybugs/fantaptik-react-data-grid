@@ -10,7 +10,7 @@ import { checkGte } from '../../js';
 
 import '../../css/styles.css';
 
- const Page = ( { className, disabled, page, total, onPage, ...props } ) => {
+const Page = ( { className, disabled, page, total, onPage, ...props } ) => {
     page = checkGte( page, 1 );
     total = checkGte( total, 1 );
     //
