@@ -63,6 +63,6 @@ export const ucfirst = ( [ first, ...rest ] ) => first.toLocaleUpperCase( naviga
  * @param {string} str The string to uppercase.
  * @returns string
  */
-export const ucwords = str => str.split( /[ _-]+/g ).map( ucfirst ).join( ' ' );
+export const ucwords = str => typeof( str ) !== "string" ? "" : str.split( /[ _-]+/g ).map( ucfirst ).join( ' ' );
 
 export default { checkGte, getColumns, jsonPrintFunction, ucfirst, ucwords };
