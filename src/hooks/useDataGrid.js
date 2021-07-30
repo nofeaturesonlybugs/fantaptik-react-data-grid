@@ -1,49 +1,46 @@
 import React from 'react';
 
+import useColumns from './useColumns';
 import useData from './useData';
 import usePages from './usePages';
-import useView from './useView';
 
 /**
  * The result type for the `useDataGrid` hook.
  * 
  * @typedef useDataGridResult
  * @type {Object}
+ * @property {useColumnsResult} columns The `columns` management object.
  * @property {useDataResult} data The `data` management object.
  * @property {usePagesResult} pages The `pages` management object.
- * @property {useViewResult} view The `view` management object.
  */
 
 /**
  * `useDataGrid` creates a data grid management object.
  * 
  * @function
- * @see {@link useData}
- * @see {@link usePages}
- * @see {@link useView}
  * @param {Object} props The initial hook values.
+ * @param {useColumnsProps} [props.columns={}] Initial `columns` hook props; see {@link useColumns}.
  * @param {useDataProps} [props.data={}]  Initial `data` hook props; see {@link useData}.
  * @param {usePagesProps} [props.pages={}]  Initial `pages` hook props; see {@link usePages}.
- * @param {useViewProps} [props.view={}] Initial `view` hook props; see {@link useView}.
  * @returns {useDataGridResult}
  */
 const useDataGrid = ( { 
+    columns : __columns = {},
     data : __data = {},
     pages : __pages = {},
-    view : __view = {},
 } = {} ) => {
+    const columns = useColumns( __columns );
     const data = useData( __data );
     const pages = usePages( __pages );
-    const view = useView( __view );
     //
     React.useEffect( () => {
         pages.setItemCount( data.data.length );
     }, [data.data] );
     //
     return {
+        columns,
         data,
         pages,
-        view,
     };
 }
 
@@ -53,9 +50,9 @@ const useDataGrid = ( {
  * @type {useDataGridResult}
  */
 export const useDataGridDefaultResult = {
+    columns : { ...useColumns.defaultResult },
     data : { ...useData.defaultResult },
     pages : { ...usePages.defaultResult },
-    view : { ...useView.defaultResult },
 }
 
 useDataGrid.defaultResult = useDataGridDefaultResult;
