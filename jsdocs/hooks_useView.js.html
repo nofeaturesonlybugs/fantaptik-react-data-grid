@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>js/index.js - Documentation</title>
+    <title>hooks/useView.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">js/index.js</h1>
+    <h1 class="page-title">hooks/useView.js</h1>
     
 
     
@@ -42,74 +42,52 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * `checkGte` returns `n >= gte ? n : gte`.
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+
+import useColumns from './useColumns';
+
+/**
+ * The properties that can be passed to the `useView` hook.
+ * 
+ * @typedef useViewProps
+ * @type {Object}
+ * @property {useColumnsProps} columns Initial props to pass down to `useColumns` hook.
+ */
+
+/**
+ * The result type for the `useView` hook.
+ * 
+ * @typedef useViewResult
+ * @type {Object}
+ * @property {useColumnsResult} columns Management object for columns.
+ */
+
+/**
+ * `useView` creates a view management object.
  * 
  * @function
- * @param {number} n The number to check.
- * @param {number} gte n must be greater-than-equal to this value.
- * @returns number
+ * @param {useViewProps} props Initial `view` hook props.
+ * @returns {useViewResult}
  */
-export const checkGte = ( n, gte ) => {
-    n = parseInt( n, 10 );
-    n = n >= gte ? n : gte;
-    return n;
+const useView = ( { columns : columnsDefault = {} } = {} ) => {
+    const columns = useColumns( columnsDefault );
+    return {
+        columns,
+    };
 }
 
 /**
- * `getColumns` accepts a data row and returns a `column[]`.  
- * @function
- * @param {Object} row A data row.
- * @param {function} transform Function to transform column name; `name => name.toLowerCase()`.
- * @returns {column[]}
+ * A default `useViewResult`.
+ * 
+ * @type {useViewResult}
  */
-export const getColumns = ( row, transform ) => {
-    row = row || {};
-    transform = transform || (name => name);
-    //
-    const columns = [];
-    for( const key of Object.keys( row ) ) {
-        columns.push( { name : key, label : transform( key ), width : 0, height : 0, visible : true } );
-    }
-    return columns;
+export const useViewDefaultResult = {
+    columns : { ...useColumns.defaultResult },
 }
 
-/**
- * `jsonPrintFunction` can be used as the second argument to `JSON.stringify()` to print functions.
- * 
- * @function
- * @param {any} key
- * @param {any} value 
- * @returns string
- */
-export const jsonPrintFunction = ( key, value ) => {
-    if( typeof value === "function" ) {
-        return value.toString().split( "\n" )[0].replace( /function ([^{]+) {.*/, (match, p1) => {
-            return p1 + " => [body]";
-        } );
-    }
-    return value;
-}
+useView.defaultResult = useViewDefaultResult;
 
-/**
- * `ucfirst` uppercases the first character of a string.
- * 
- * @function
- * @param {string} str The string to uppercase.
- * @returns string
- */
-export const ucfirst = ( [ first, ...rest ] ) => first.toLocaleUpperCase( navigator.language ) + rest.join( '' );
-
-/**
- * `ucwords` uppercases the first letter of each word in string.
- * 
- * @function
- * @param {string} str The string to uppercase.
- * @returns string
- */
-export const ucwords = str => str.split( /[ _-]+/g ).map( ucfirst ).join( ' ' );
-
-export default { checkGte, getColumns, jsonPrintFunction, ucfirst, ucwords };</code></pre>
+export default useView;</code></pre>
         </article>
     </section>
 

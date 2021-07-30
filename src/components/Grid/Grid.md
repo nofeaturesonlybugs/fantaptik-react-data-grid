@@ -1,7 +1,7 @@
 A `Grid` in action.
 
 ```jsx
-<Grid autoChildren={false} data={data}>
+<Grid autoChildren={false} data={data} sample={dataSample}>
     <div>
         <Grid.PerPage /><Grid.Page />
     </div>
@@ -29,7 +29,7 @@ const gridStyles = {
         Adjust the container height:
         <input value={height} type="range" min="200" max="1000" onChange={ e => setHeight( e.target.value ) } />
     </p>
-    <Grid data={data} style={gridStyles}>
+    <Grid data={data} sample={dataSample} style={gridStyles}>
         <Grid.Header>
             <Grid.PerPage /><Grid.Page />
         </Grid.Header>

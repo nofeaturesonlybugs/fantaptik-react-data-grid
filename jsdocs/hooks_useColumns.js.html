@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>hooks/useColumns.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#checkGte">checkGte</a></li><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#jsonPrintFunction">jsonPrintFunction</a></li><li><a href="global.html#ucfirst">ucfirst</a></li><li><a href="global.html#ucwords">ucwords</a></li><li><a href="global.html#useColumns">useColumns</a></li><li><a href="global.html#useColumnsDefaultResult">useColumnsDefaultResult</a></li><li><a href="global.html#useData">useData</a></li><li><a href="global.html#useDataDefaultResult">useDataDefaultResult</a></li><li><a href="global.html#useDataGrid">useDataGrid</a></li><li><a href="global.html#useDataGridDefaultResult">useDataGridDefaultResult</a></li><li><a href="global.html#usePages">usePages</a></li><li><a href="global.html#usePagesDefaultResult">usePagesDefaultResult</a></li><li><a href="global.html#useUi">useUi</a></li><li><a href="global.html#useUiDefaultResult">useUiDefaultResult</a></li><li><a href="global.html#useView">useView</a></li><li><a href="global.html#useViewDefaultResult">useViewDefaultResult</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">hooks/useColumns.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+
+/**
+ * `column` describes a column.
+ * 
+ * @typedef column
+ * @type {Object}
+ * @property {string} name The column name; this would be the lookup key into a data row to get the value.
+ * @property {string} label Friendly label when displaying column name to end user.
+ * @property {number} width The width required for DOM elements displaying this column.
+ * @property {number} height The height required for DOM elements displaying this column.
+ * @property {bool} visible `true` if visible; any other value denotes not visible.
+ */
+
+/**
+ * The properties that can be passed to the `useColumns` hook.
+ * 
+ * @typedef useColumnsProps
+ * @type {Object}
+ * @property {column[]} columns Array of `column`s in the data.
+ */
+
+/**
+ * The result type for the `useColumns` hook.
+ * 
+ * @typedef useColumnsResult
+ * @type {Object}
+ * @property {column[]} columns Array of `column`s in the data in the order to be rendered.
+ * @property {function} setColumns      `result.setColumns( column[] ); // Set columns to new array.`
+ * @property {function} swap            `result.swap( 2, 3 ); // Swap order of columns with indeces 2 &amp; 3`
+ * @property {function} hide            `result.hide( 2 ); // Hide column with index 2`
+ * @property {function} show            `result.show( 2 ); // Show column with index 2`
+ */
+
+/**
+ * `useColumns` creates a columns management object.
+ * 
+ * @function
+ * @param {useColumnsProps} props Initial `columns` hook props.
+ * @returns {useColumnsResult}
+ */
+const useColumns = ( { 
+    columns : columnsDefault = [],
+} = {} ) => {
+    // fix iterates columns and ensures all properties are set appropriately.
+    const fix = arr => arr.map( column => {
+        let { name = "", label = "", width = 150, height = 35, visible = true } = column; // TODO Need a way to replace defaults.
+        visible = visible === true;
+        //
+        width = parseInt( width, 10 );
+        height = parseInt( height, 10 );
+        width = width &lt; 0 ? 0 : width;
+        height = height &lt; 0 ? 0 : height;
+        //
+        return { name, label, width, height, visible };
+    } );
+    const [columns, stateColumns] = React.useState( fix( columnsDefault ) );
+    //
+    const setColumns = value => {
+        stateColumns( fix( value ) );
+    }
+    const swap = (a,b) => {
+        a = parseInt( a, 10 );
+        b = parseInt( b, 10 );
+        if( a > b ) {
+            // Force a less-than b
+            [a,b] = [b,a];
+        }
+        if( a &lt; 0 || b > (columns.length - 1) || a === b ) {
+            return;
+        }
+        const [m,n] = [columns[a], columns[b]];
+        const newColumns = [ ...columns ];
+        newColumns[a] = n;
+        newColumns[b] = m;
+        stateColumns( newColumns );
+    }
+    const hide = a => {
+        a = parseInt( a, 10 );
+        if( a &lt; 0 || a > (columns.length - 1) || columns[a].visible !== true ) {
+            return;
+        }
+        columns[a] = { ...columns[a], visible : false };
+        stateColumns( [ ...columns ] );
+    }
+    const show = a => {
+        a = parseInt( a, 10 );
+        if( a &lt; 0 || a > (columns.length - 1) || columns[a].visible !== false ) {
+            return;
+        }
+        columns[a] = { ...columns[a], visible : true };
+        stateColumns( [ ...columns ] );
+    }
+    //
+    return {
+        columns, setColumns,
+        swap,
+        hide,
+        show,
+    };
+}
+
+/**
+ * A default `useColumnsResult`.
+ * 
+ * @type {useColumnsResult}
+ */
+export const useColumnsDefaultResult = {
+    columns : [], setColumns : columns => null,
+    swap : (a,b) => null,
+    hide : a => null,
+    show : a => null,
+
+}
+
+useColumns.defaultResult = useColumnsDefaultResult;
+
+export default useColumns;</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Fri Jul 30 2021 11:39:18 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

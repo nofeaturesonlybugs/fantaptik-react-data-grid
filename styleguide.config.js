@@ -33,7 +33,6 @@ module.exports = {
 
     pagePerSection : true,
 
-    // TODO No sections yet.
     sections : [
         {
             name : 'jsdocs',
@@ -43,6 +42,14 @@ module.exports = {
         {
             name : 'styling',
             content : 'mddocs/styles.md',
+        },
+        {
+            name : 'hooks',
+            content : 'mddocs/hooks.md',
+        },
+        {
+            name : 'isolated',
+            content : 'mddocs/isolate.md',
         },
         {
             name : 'Components',

@@ -29,6 +29,7 @@ import { checkGte } from '../js';
  * @property {function} previous    `result.previous();     // Go to previous page.`
  * @property {function} first       `result.first();        // Go to first page.`
  * @property {function} last        `result.last();         // Go to last page.`
+ * @property {function} slice       `result.slice( data );  // Slices data and returns a new array of just the paginated portion.`
  */
 
 /**
@@ -38,18 +39,22 @@ import { checkGte } from '../js';
  * @param {usePagesProps}  Initial `pages` hook props.
  * @returns {usePagesResult}
  */
-const usePages = ( { itemCount : itemCountDefault = 1, page : pageDefault = 1, perPage : perPageDefault = 25, } = {} ) => {
+const usePages = ( {
+    itemCount : __itemCount = 1,
+    page : __page = 1,
+    perPage : __perPage = 25,
+} = {} ) => {
     //
     // Our incoming values need to make sense.
-    itemCountDefault = checkGte( itemCountDefault, 0 );
-    perPageDefault = checkGte( perPageDefault, 1 );
-    perPageDefault = checkGte( perPageDefault, 1 );
-    const totalDefault = Math.ceil( itemCountDefault / perPageDefault );
+    __itemCount = checkGte( __itemCount, 0 );
+    __perPage = checkGte( __perPage, 1 );
+    __perPage = checkGte( __perPage, 1 );
+    const __total = Math.ceil( __itemCount / __perPage );
     //
-    const [itemCount, stateItemCount] = React.useState( itemCountDefault );
-    const [perPage, statePerPage] = React.useState( perPageDefault );
-    const [page, statePage] = React.useState( pageDefault );
-    const [total, stateTotal] = React.useState( totalDefault );
+    const [itemCount, stateItemCount] = React.useState( __itemCount );
+    const [perPage, statePerPage] = React.useState( __perPage );
+    const [page, statePage] = React.useState( __page );
+    const [total, stateTotal] = React.useState( __total );
     //
     const setItemCount = value => {
         value = checkGte( value, 0 );
@@ -84,20 +89,32 @@ const usePages = ( { itemCount : itemCountDefault = 1, page : pageDefault = 1, p
         }
         statePage( value );
     }
+    //
+    const itemOffset = (page - 1) * perPage;
+    //
     return {
         perPage, setPerPage,
         page, setPage,
         itemCount, setItemCount,
-        itemOffset : (page - 1) * perPage,
+        itemOffset,
         total,
         next : () => setPage( page + 1 ),
         previous : () => setPage( page - 1 ),
         first : () => setPage( 1 ),
         last : () => setPage( total ),
+        slice : data => {
+            data = Array.isArray( data ) ? data : [];
+            return data.slice( itemOffset, itemOffset + perPage );
+        },
     };
 }
 
-export const usePagesContext = {
+/**
+ * A default `usePagesResult`.
+ * 
+ * @type {usePagesResult}
+ */
+export const usePagesDefaultResult = {
     perPage : 1, setPerPage : perPage => null,
     page : 1, setPage : page => null,
     itemCount : 1, setItemCount : itemCount => null,
@@ -107,6 +124,9 @@ export const usePagesContext = {
     previous : () => null,
     first : () => null,
     last : () => null,
+    slice : data => null,
 }
+
+usePages.defaultResult = usePagesDefaultResult;
 
 export default usePages;

@@ -42,6 +42,8 @@ const make = ( { className : classNameDefault, icon : iconDefault, label : label
 
 const ButtonFactory = config => make( config );
 
+Buttons.MoveDown        = ButtonFactory( { className : "move-down", icon : conf.icons.move.down, label : "Down" } );
+Buttons.MoveUp          = ButtonFactory( { className : "move-up", icon : conf.icons.move.up, label : "Up" } );
 Buttons.PageFirst       = ButtonFactory( { className : "page-first", icon : conf.icons.pages.first, label : "First" } );
 Buttons.PageLast        = ButtonFactory( { className : "page-last", icon : conf.icons.pages.last, label : "Last" } );
 Buttons.PageNext        = ButtonFactory( { className : "page-next", icon : conf.icons.pages.next, label : "Next" } );
@@ -84,6 +86,11 @@ const ContextPagePrevious = ( props ) => {
     );
 }
 
+// NB:  MoveDown and MoveUp have no special behavior within the context but we add them to ContextButtons
+//      so the user experience can be complete and less confusing.
+ContextButtons.MoveDown = Buttons.MoveDown;
+ContextButtons.MoveUp = Buttons.MoveUp;
+//
 ContextButtons.PageFirst = ContextPageFirst;
 ContextButtons.PageLast = ContextPageLast;
 ContextButtons.PageNext = ContextPageNext;
