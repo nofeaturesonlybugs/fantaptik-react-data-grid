@@ -1,14 +1,9 @@
-// TODO Update
 import data from './mock/mock-data';
 
 import conf from './src/conf/conf';
 
 import { getColumns, jsonPrintFunction, ucwords } from './src/js';
 import { useColumns, useData, useDataGrid, usePages } from './src/hooks';
-
-// import Promises from './src/lib/Promises';
-
-// import { Show, Text } from '@fantaptik/react-material';
 
 import Buttons from './src/components/Buttons/Buttons';
 import ColumnOrder from './src/components/ColumnOrder/ColumnOrder';
@@ -18,9 +13,6 @@ import Page from './src/components/Page/Page';
 import PerPage from './src/components/PerPage/PerPage';
 import Rows from './src/components/Rows/Rows';
 import SampleRow from './src/components/SampleRow/SampleRow';
-
-// import ChangePassword from './src/forms/ChangePassword/ChangePassword';
-// import Login from './src/forms/Login/Login';
 
 global.dataSample = {
     id              : 999999,
@@ -43,7 +35,6 @@ global.data3 = data.slice(0,3);
 global.data10 = data.slice(0,10);
 
 global.conf = conf;
-// global.Promises = Promises;
 
 // src/js...
 global.getColumns = getColumns;
@@ -57,9 +48,6 @@ global.useData = useData;
 global.useDataGrid = useDataGrid;
 global.usePages = usePages;
 
-// global.Show = Show;
-// global.Text = Text;
-
 global.Buttons = Buttons;
 global.ColumnOrder = ColumnOrder;
 global.Grid = Grid;
@@ -68,6 +56,3 @@ global.Page = Page;
 global.PerPage = PerPage;
 global.Rows = Rows;
 global.SampleRow = SampleRow;
-
-// global.ChangePassword = ChangePassword;
-// global.Login = Login;

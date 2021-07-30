@@ -28,8 +28,10 @@ const Rows = ( {
     // If columns is not provided or not an array we'll gather them from the first available row with the useColumns hook.
     if( ! Array.isArray( columns ) ) {
         columns = getColumns( data.length > 0 ? data[0] : {}, columnTransform );
+        columns.map( column => column.width = checkGte( column.width, cellWidth ) );
+    } else {
+        columns.map( column => column.width = column.width > 0 ? column.width : cellWidth );
     }
-    columns.map( column => column.width = checkGte( column.width, cellWidth ) );
     //
     // We render two react-windows, one of which is for the grid headers, and require their scrolling to remain 
     // synchronized.  By attaching headerCallback to the header react-window we can set its scroll position to

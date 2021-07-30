@@ -33,7 +33,6 @@ module.exports = {
 
     pagePerSection : true,
 
-    // TODO No sections yet.
     sections : [
         {
             name : 'jsdocs',

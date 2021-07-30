@@ -46,7 +46,7 @@ const useColumns = ( {
 } = {} ) => {
     // fix iterates columns and ensures all properties are set appropriately.
     const fix = arr => arr.map( column => {
-        let { name = "", label = "", width = 0, height = 0, visible = true } = column; // TODO Need a way to replace defaults.
+        let { name = "", label = "", width = 0, height = 0, visible = true } = column;
         visible = visible === true;
         //
         width = checkGte( width, 0 );
