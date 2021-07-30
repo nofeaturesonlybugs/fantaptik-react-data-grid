@@ -4,7 +4,7 @@ import data from './mock/mock-data';
 import conf from './src/conf/conf';
 
 import { getColumns, jsonPrintFunction, ucwords } from './src/js';
-import { useColumns, useData, useDataGrid, usePages, useView, useUi } from './src/hooks';
+import { useColumns, useData, useDataGrid, usePages, useView } from './src/hooks';
 
 // import Promises from './src/lib/Promises';
 
@@ -57,7 +57,6 @@ global.useData = useData;
 global.useDataGrid = useDataGrid;
 global.usePages = usePages;
 global.useView = useView;
-global.useUi = useUi;
 
 // global.Show = Show;
 // global.Text = Text;
