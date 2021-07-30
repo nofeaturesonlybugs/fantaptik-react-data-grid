@@ -104,7 +104,7 @@ const Rows = ( {
 }
 
 const ContextRows = ( props ) => {
-    const { data : { data }, pages : { slice }, view : { columns : { columns } } } = React.useContext( GridContext );
+    const { columns : { columns }, data : { data }, pages : { slice } } = React.useContext( GridContext );
     const passthru = {
         data : slice( data ),
         columns : columns,

@@ -83,7 +83,7 @@ const SampleRow = ( { row, onSized, ...props } ) => {
 }
 
 const ContextSampleRow = ( props ) => {
-    const { data : { sample = {} }, view : { columns : { setColumns } } } = React.useContext( GridContext );
+    const { columns : { setColumns }, data : { sample = {} } } = React.useContext( GridContext );
     const handlers = {
         sized : columns => {
             setColumns( columns );
