@@ -40,21 +40,21 @@ import { checkGte } from '../js';
  * @returns {usePagesResult}
  */
 const usePages = ( {
-    itemCount : itemCountDefault = 1,
-    page : pageDefault = 1,
-    perPage : perPageDefault = 25,
+    itemCount : __itemCount = 1,
+    page : __page = 1,
+    perPage : __perPage = 25,
 } = {} ) => {
     //
     // Our incoming values need to make sense.
-    itemCountDefault = checkGte( itemCountDefault, 0 );
-    perPageDefault = checkGte( perPageDefault, 1 );
-    perPageDefault = checkGte( perPageDefault, 1 );
-    const totalDefault = Math.ceil( itemCountDefault / perPageDefault );
+    __itemCount = checkGte( __itemCount, 0 );
+    __perPage = checkGte( __perPage, 1 );
+    __perPage = checkGte( __perPage, 1 );
+    const __total = Math.ceil( __itemCount / __perPage );
     //
-    const [itemCount, stateItemCount] = React.useState( itemCountDefault );
-    const [perPage, statePerPage] = React.useState( perPageDefault );
-    const [page, statePage] = React.useState( pageDefault );
-    const [total, stateTotal] = React.useState( totalDefault );
+    const [itemCount, stateItemCount] = React.useState( __itemCount );
+    const [perPage, statePerPage] = React.useState( __perPage );
+    const [page, statePage] = React.useState( __page );
+    const [total, stateTotal] = React.useState( __total );
     //
     const setItemCount = value => {
         value = checkGte( value, 0 );

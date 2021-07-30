@@ -27,13 +27,13 @@ import React from 'react';
  * @returns {useDataResult}
  */
 const useData = ( { 
-    data : dataDefault = [],
-    sample : sampleDefault = null,
+    data : __data = [],
+    sample : __sample = null,
 } = {} ) => {
-    dataDefault = Array.isArray( dataDefault ) ? dataDefault : [];
+    __data = Array.isArray( __data ) ? __data : [];
     //
-    const [data, setData] = React.useState( dataDefault );
-    const [sample, setSample] = React.useState( sampleDefault );
+    const [data, setData] = React.useState( __data );
+    const [sample, setSample] = React.useState( __sample );
     //
     React.useEffect( () => {
         if( ! sample && data.length > 0 ) {
@@ -44,7 +44,7 @@ const useData = ( {
             // each column.
             setSample( data[ 0 ] );
         }
-    }, [data] );
+    }, [data.data] );
     //
     const appendData = value => {
         value = Array.isArray( value ) ? value : [];

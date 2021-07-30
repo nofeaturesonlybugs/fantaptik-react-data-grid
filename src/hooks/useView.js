@@ -26,9 +26,9 @@ import useColumns from './useColumns';
  * @returns {useViewResult}
  */
 const useView = ( {
-    columns : columnsDefault = {},
+    columns : __columns = {},
 } = {} ) => {
-    const columns = useColumns( columnsDefault );
+    const columns = useColumns( __columns );
     return {
         columns,
     };

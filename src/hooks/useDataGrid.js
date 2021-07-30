@@ -32,15 +32,15 @@ import useUi from './useUi';
  * @returns {useDataGridResult}
  */
 const useDataGrid = ( { 
-    data : dataDefault = {},
-    pages : pagesDefault = {},
-    view : viewDefault = {},
-    ui : uiDefault = {},
+    data : __data = {},
+    pages : __pages = {},
+    view : __view = {},
+    ui : __ui = {},
 } = {} ) => {
-    const data = useData( dataDefault );
-    const pages = usePages( pagesDefault );
-    const view = useView( viewDefault );
-    const ui = useUi( uiDefault );
+    const data = useData( __data );
+    const pages = usePages( __pages );
+    const view = useView( __view );
+    const ui = useUi( __ui );
     //
     React.useEffect( () => {
         pages.setItemCount( data.data.length );

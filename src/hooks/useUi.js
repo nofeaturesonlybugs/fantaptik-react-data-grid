@@ -61,11 +61,11 @@ const useUiColumns = ( {
  * @ignore
  */
 const useUiRows = ( {
-    gutter : defaultGutter = 0, // TODO Make a configurable export or something.
-    padding : defaultPadding = 0, // TODO Make a configurable export or something.
+    gutter : __gutter = 0, // TODO Make a configurable export or something.
+    padding : __padding = 0, // TODO Make a configurable export or something.
 } = {} ) => {
-    const [gutter, setGutter] = React.useState( defaultGutter );
-    const [padding, setPadding] = React.useState( defaultPadding );
+    const [gutter, setGutter] = React.useState( __gutter );
+    const [padding, setPadding] = React.useState( __padding );
     return {
         gutter, setGutter,
         padding, setPadding,
@@ -80,11 +80,11 @@ const useUiRows = ( {
  * @returns {useUiResult}
  */
 const useUi = ( { 
-    columns : defaultColumns = {},
-    rows : defaultRows = {}
+    columns : __columns = {},
+    rows : __rows = {}
 } = {} ) => {
-    const columns = useUiColumns( defaultColumns || {} );
-    const rows = useUiRows( defaultRows || {} );
+    const columns = useUiColumns( __columns );
+    const rows = useUiRows( __rows );
     //
     return {
         columns,

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { checkGte } from '../js';
+
 /**
  * `column` describes a column.
  * 
@@ -40,21 +42,19 @@ import React from 'react';
  * @returns {useColumnsResult}
  */
 const useColumns = ( { 
-    columns : columnsDefault = [],
+    columns : __columns = [],
 } = {} ) => {
     // fix iterates columns and ensures all properties are set appropriately.
     const fix = arr => arr.map( column => {
-        let { name = "", label = "", width = 150, height = 35, visible = true } = column; // TODO Need a way to replace defaults.
+        let { name = "", label = "", width = 0, height = 0, visible = true } = column; // TODO Need a way to replace defaults.
         visible = visible === true;
         //
-        width = parseInt( width, 10 );
-        height = parseInt( height, 10 );
-        width = width < 0 ? 0 : width;
-        height = height < 0 ? 0 : height;
+        width = checkGte( width, 0 );
+        height = checkGte( height, 0 );
         //
         return { name, label, width, height, visible };
     } );
-    const [columns, stateColumns] = React.useState( fix( columnsDefault ) );
+    const [columns, stateColumns] = React.useState( fix( __columns ) );
     //
     const setColumns = value => {
         stateColumns( fix( value ) );
