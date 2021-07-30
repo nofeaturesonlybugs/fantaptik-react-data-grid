@@ -25,7 +25,9 @@ import useColumns from './useColumns';
  * @param {useViewProps} props Initial `view` hook props.
  * @returns {useViewResult}
  */
-const useView = ( { columns : columnsDefault = {} } = {} ) => {
+const useView = ( {
+    columns : columnsDefault = {},
+} = {} ) => {
     const columns = useColumns( columnsDefault );
     return {
         columns,

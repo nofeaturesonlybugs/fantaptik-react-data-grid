@@ -39,7 +39,11 @@ import { checkGte } from '../js';
  * @param {usePagesProps}  Initial `pages` hook props.
  * @returns {usePagesResult}
  */
-const usePages = ( { itemCount : itemCountDefault = 1, page : pageDefault = 1, perPage : perPageDefault = 25, } = {} ) => {
+const usePages = ( {
+    itemCount : itemCountDefault = 1,
+    page : pageDefault = 1,
+    perPage : perPageDefault = 25,
+} = {} ) => {
     //
     // Our incoming values need to make sense.
     itemCountDefault = checkGte( itemCountDefault, 0 );

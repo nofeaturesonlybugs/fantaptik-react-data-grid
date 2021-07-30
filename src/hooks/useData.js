@@ -26,7 +26,10 @@ import React from 'react';
  * @param {useDataProps} props Initial `data` hook props.
  * @returns {useDataResult}
  */
-const useData = ( { data : dataDefault = [], sample : sampleDefault } = {} ) => {
+const useData = ( { 
+    data : dataDefault = [],
+    sample : sampleDefault = null,
+} = {} ) => {
     dataDefault = Array.isArray( dataDefault ) ? dataDefault : [];
     //
     const [data, setData] = React.useState( dataDefault );
@@ -61,7 +64,7 @@ const useData = ( { data : dataDefault = [], sample : sampleDefault } = {} ) => 
  */
 export const useDataDefaultResult = {
     data : [], appendData : data => null, setData : data => null,
-    sample : {},
+    sample : null,
 }
 
 useData.defaultResult = useDataDefaultResult;

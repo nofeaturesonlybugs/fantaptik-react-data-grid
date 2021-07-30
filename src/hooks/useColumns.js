@@ -39,7 +39,9 @@ import React from 'react';
  * @param {useColumnsProps} props Initial `columns` hook props.
  * @returns {useColumnsResult}
  */
-const useColumns = ( { columns : columnsDefault = [] } = {} ) => {
+const useColumns = ( { 
+    columns : columnsDefault = [],
+} = {} ) => {
     // fix iterates columns and ensures all properties are set appropriately.
     const fix = arr => arr.map( column => {
         let { name = "", label = "", width = 150, height = 35, visible = true } = column; // TODO Need a way to replace defaults.
