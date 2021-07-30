@@ -24,8 +24,3 @@ The following `hooks` are exposed by this package and calling them returns objec
 ```jsx
 <pre>{JSON.stringify(useView.defaultResult, jsonPrintFunction, "\t")}</pre>
 ```
-
-### `useUi()`
-```jsx
-<pre>{JSON.stringify(useUi.defaultResult, jsonPrintFunction, "\t")}</pre>
-```
