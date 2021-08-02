@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#checkGte">checkGte</a></li><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#jsonPrintFunction">jsonPrintFunction</a></li><li><a href="global.html#ucfirst">ucfirst</a></li><li><a href="global.html#ucwords">ucwords</a></li><li><a href="global.html#useColumns">useColumns</a></li><li><a href="global.html#useColumnsDefaultResult">useColumnsDefaultResult</a></li><li><a href="global.html#useData">useData</a></li><li><a href="global.html#useDataDefaultResult">useDataDefaultResult</a></li><li><a href="global.html#useDataGrid">useDataGrid</a></li><li><a href="global.html#useDataGridDefaultResult">useDataGridDefaultResult</a></li><li><a href="global.html#usePages">usePages</a></li><li><a href="global.html#usePagesDefaultResult">usePagesDefaultResult</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#checkGte">checkGte</a></li><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#jsonPrintFunction">jsonPrintFunction</a></li><li><a href="global.html#reject">reject</a></li><li><a href="global.html#resolve">resolve</a></li><li><a href="global.html#ucfirst">ucfirst</a></li><li><a href="global.html#ucwords">ucwords</a></li><li><a href="global.html#useColumns">useColumns</a></li><li><a href="global.html#useColumnsDefaultResult">useColumnsDefaultResult</a></li><li><a href="global.html#useData">useData</a></li><li><a href="global.html#useDataDefaultResult">useDataDefaultResult</a></li><li><a href="global.html#useDataGrid">useDataGrid</a></li><li><a href="global.html#useDataGridDefaultResult">useDataGridDefaultResult</a></li><li><a href="global.html#usePages">usePages</a></li><li><a href="global.html#usePagesDefaultResult">usePagesDefaultResult</a></li><li><a href="global.html#useProvider">useProvider</a></li><li><a href="global.html#useProviderDefaultResult">useProviderDefaultResult</a></li></ul>
 </nav>
 
 <div id="main">
@@ -203,7 +203,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hooks_useData.js.html">hooks/useData.js</a>, <a href="hooks_useData.js.html#line65">line 65</a>
+        <a href="hooks_useData.js.html">hooks/useData.js</a>, <a href="hooks_useData.js.html#line70">line 70</a>
     </li></ul></dd>
     
 
@@ -276,7 +276,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hooks_useDataGrid.js.html">hooks/useDataGrid.js</a>, <a href="hooks_useDataGrid.js.html#line52">line 52</a>
+        <a href="hooks_useDataGrid.js.html">hooks/useDataGrid.js</a>, <a href="hooks_useDataGrid.js.html#line72">line 72</a>
     </li></ul></dd>
     
 
@@ -399,6 +399,79 @@
         <li>
             
 <span class="param-type"><a href="global.html#usePagesResult">usePagesResult</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="useProviderDefaultResult"><span class="type-signature">(constant) </span>useProviderDefaultResult<span class="type-signature"> :<a href="global.html#useProviderResult">useProviderResult</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="hooks_useProvider.js.html">hooks/useProvider.js</a>, <a href="hooks_useProvider.js.html#line63">line 63</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>A default <code>useProviderResult</code>.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="global.html#useProviderResult">useProviderResult</a></span>
 
 
         </li>
@@ -927,6 +1000,324 @@
 
 
     
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="reject"><span class="type-signature"></span>reject<span class="signature">(timeout, result)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="js_index.js.html">js/index.js</a>, <a href="js_index.js.html#line75">line 75</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p><code>reject</code> returns a Promise that will reject after a <code>timeout</code> with <code>result</code>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The timeout after which the Promise rejects.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>result</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The result to pass to the Promise.catch() method.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="resolve"><span class="type-signature"></span>resolve<span class="signature">(timeout, result)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="js_index.js.html">js/index.js</a>, <a href="js_index.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p><code>resolve</code> returns a Promise that will resolve after a <code>timeout</code> with <code>result</code>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The timeout after which the Promise resolves.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>result</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The result to pass to the Promise.then() method.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1547,7 +1938,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hooks_useDataGrid.js.html">hooks/useDataGrid.js</a>, <a href="hooks_useDataGrid.js.html#line27">line 27</a>
+        <a href="hooks_useDataGrid.js.html">hooks/useDataGrid.js</a>, <a href="hooks_useDataGrid.js.html#line37">line 37</a>
     </li></ul></dd>
     
 
@@ -1785,6 +2176,45 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>provider</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#useProviderProps">useProviderProps</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Initial <code>provider</code> hook props; see <a href="global.html#useProvider">useProvider</a>.</p></td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -1976,6 +2406,163 @@
     <dd>
         
 <span class="param-type"><a href="global.html#usePagesResult">usePagesResult</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="useProvider"><span class="type-signature"></span>useProvider<span class="signature">(Initial)</span><span class="type-signature"> &rarr; {<a href="global.html#useProviderResult">useProviderResult</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="hooks_useProvider.js.html">hooks/useProvider.js</a>, <a href="hooks_useProvider.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p><code>useProvider</code> creates a provider management object.</p>
+<p><code>firstVisible</code> and <code>lastVisible</code> are updated with the indeces of visible rows as the user scrolls
+through the grid.  A <code>Grid.Provider</code> component can use this information to determine if it needs to pull
+more data from an API as the user reaches the end of the grid.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Initial</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#useProviderProps">useProviderProps</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>scroll</code> hook props.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="global.html#useProviderResult">useProviderResult</a></span>
 
 
     </dd>
@@ -2563,7 +3150,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hooks_useDataGrid.js.html">hooks/useDataGrid.js</a>, <a href="hooks_useDataGrid.js.html#line7">line 7</a>
+        <a href="hooks_useDataGrid.js.html">hooks/useDataGrid.js</a>, <a href="hooks_useDataGrid.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -2689,6 +3276,215 @@
             
 
             <td class="description last"><p>The <code>pages</code> management object.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>provider</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#useProviderResult">useProviderResult</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The <code>provider</code> management object.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>flags</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Flags and switches that control behavior.</p>
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>loading</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>true</code> indicates data is loading.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pageLoading</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>true</code> indicates a page is loading when data is viewed as pages.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sliceRows</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>true</code> indicates <code>data.data</code> should be sliced according to pagination when displayed.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setLoading</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>result.setLoading( true ); // Indicates data is loading.</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setPageLoading</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>result.setPageLoading( true ); // Indicate a page of data is loading.</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setSliceRows</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>result.setSliceRows( false ); // Disable slicing rows by pagination when displayed.</code></p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -3712,6 +4508,273 @@
 
 
             
+                
+<h4 class="name" id="useProviderProps">useProviderProps</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="hooks_useProvider.js.html">hooks/useProvider.js</a>, <a href="hooks_useProvider.js.html#line5">line 5</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The properties that can be passed to the <code>useProvider</code> hook.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="useProviderResult">useProviderResult</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="hooks_useProvider.js.html">hooks/useProvider.js</a>, <a href="hooks_useProvider.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>firstVisible</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Index of first visible item in rows.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>lastVisible</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Index of last visible item in rows.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setFirstVisible</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>result.setFirstVisible( 10 );  // Updates firstVisible to 10</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setLastVisible</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p><code>result.setLastVisible( 20 );   // Updates lastVisible to 20</code></p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description usertext">
+    <p>The result type for the <code>useProvider</code> hook.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+            
     
 
     
@@ -3729,7 +4792,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Fri Jul 30 2021 14:43:48 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Aug 02 2021 15:39:38 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

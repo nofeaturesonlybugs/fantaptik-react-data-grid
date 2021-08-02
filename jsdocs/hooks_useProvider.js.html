@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>hooks/useProvider.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,51 +32,89 @@
 
 <div id="main">
     
+    <h1 class="page-title">hooks/useProvider.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
 
+import { checkGte } from '../js';
 
-    <section class="package">
-        <h3> </h3>		
-    </section>
+/**
+ * The properties that can be passed to the `useProvider` hook.
+ * 
+ * @typedef useProviderProps
+ * @type {object}
+ */
 
+/**
+ * The result type for the `useProvider` hook.
+ * 
+ * @typedef useProviderResult
+ * @type {Object}
+ * @property {number} firstVisible Index of first visible item in rows.
+ * @property {number} lastVisible Index of last visible item in rows.
+ * @property {function} setFirstVisible     `result.setFirstVisible( 10 );  // Updates firstVisible to 10`
+ * @property {function} setLastVisible      `result.setLastVisible( 20 );   // Updates lastVisible to 20`
+ */
 
+/**
+ * `useProvider` creates a provider management object.  
+ * 
+ * `firstVisible` and `lastVisible` are updated with the indeces of visible rows as the user scrolls
+ * through the grid.  A `Grid.Provider` component can use this information to determine if it needs to pull
+ * more data from an API as the user reaches the end of the grid.
+ * 
+ * @function
+ * @param {useProviderProps} Initial `scroll` hook props.
+ * @returns {useProviderResult}
+ */
+const useProvider = () => {
+    const [firstVisible, stateFirstVisible] = React.useState( 0 );
+    const [lastVisible, stateLastVisible] = React.useState( 0 );
+    //
+    const setFirstVisible = value => {
+        value = checkGte( value, 0 );
+        if( value !== firstVisible ) {
+            stateFirstVisible( value );
+        }
+    }
+    //
+    const setLastVisible = value => {
+        value = checkGte( value, 0 );
+        if( value !== lastVisible ) {
+            stateLastVisible( value );
+        }
+    }
+    //
+    return {
+        firstVisible, setFirstVisible,
+        lastVisible, setLastVisible,
+    };
+}
 
+/**
+ * A default `useProviderResult`.
+ * 
+ * @type {useProviderResult}
+ */
+export const useProviderDefaultResult = {
+    firstVisible : 0, setFirstVisible : firstVisible => null,
+    lastVisible : 0, setLastVisible : lastVisible => null,
+}
 
+useProvider.defaultResult = useProviderDefaultResult;
 
-
-
-
-
-    
-
-
-
-    <section class="readme usertext">
-        <article><h3>@fantaptik/react-data-grid</h3>
-<p>A React data grid component library using Materialize CSS for @fantaptik.</p>
-<pre class="prettyprint source lang-bash"><code>npm install @fantaptik/react-data-grid
-
-# Peer dependencies
-npm install @fantaptik/react-material react-window css-box-model hoist-non-react-statics materialize-css react react-dom
+export default useProvider;
 </code></pre>
-<p>View the Styleguidist @ https://nofeaturesonlybugs.github.io/fantaptik-react-data-grid/</p>
-<h3>Browser Compatibility</h3>
-<p>The following browser features are required by the listed components; for highest possible compatibility consider adding appropriate PolyFills.</p>
-<ul>
-<li><code>ResizeObserver</code> is used by:
-<ul>
-<li><code>Grid</code> via dependency <code>@fantaptik/react-material/Position.Fill</code>.</li>
-</ul>
-</li>
-</ul></article>
+        </article>
     </section>
-
-
 
 
 
