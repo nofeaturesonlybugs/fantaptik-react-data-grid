@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { VariableSizeGrid } from 'react-window';
 
-import { merge } from '@fantaptik/react-material';
+import { merge, Position } from '@fantaptik/react-material';
 
 import { checkGte, getColumns, ucwords } from '../../js';
 
@@ -15,10 +15,12 @@ const Rows = ( {
     cellWidth,
     columnTransform,
     rowHeight,
+    loading,
     className,
     columns,
     data,
     width, height,
+    onItemsRendered,
     ...props
 } ) => {
     //
@@ -66,12 +68,25 @@ const Rows = ( {
     }
     //
     const handlers = {
+        // items is attached to the data rows and called when items are rendered.
+        items : ( { visibleRowStartIndex : first, visibleRowStopIndex : last } ) => {
+            onItemsRendered && onItemsRendered( { first, last } );
+        },
         // scroll is attached to the data rows grid and updates the column header's grid scroll position.
         scroll : ( { scrollLeft } ) => {
             if( headerRef ) {
                 headerRef.scrollTo( { scrollLeft, scrollTop : 0 } );
             }
         },
+    }
+    //
+    let loadingComponent = null;
+    if( loading ) {
+        loadingComponent = (
+            <Position target=".data-grid-rows" put="top-left" at="top-left" sameWidth={true} sameHeight={true}>
+                <div className="data-grid-loading" />
+            </Position>
+        );
     }
     //
     const classes = {
@@ -97,20 +112,37 @@ const Rows = ( {
                 columnCount={columns.length} columnWidth={n => columns[n].width}
                 rowCount={data.length} rowHeight={n => rowHeight}
                 itemKey={itemKey} itemData={data}
+                onItemsRendered={handlers.items}
                 onScroll={handlers.scroll}
                 >
                 {Row}
             </VariableSizeGrid>
+            {loadingComponent}
         </>
     );
 }
 
-const ContextRows = ( props ) => {
-    const { columns : { columns }, data : { data }, pages : { slice } } = React.useContext( GridContext );
+const ContextRows = ( { onItemsRendered, ...props } ) => {
+    const { 
+        columns : { columns },
+        data : { data },
+        flags: { pageLoading, sliceRows },
+        pages : { slice },
+        provider : { setFirstVisible, setLastVisible },
+    } = React.useContext( GridContext );
+    //
     const passthru = {
-        data : slice( data ),
-        columns : columns,
+        data : sliceRows === true ? slice( data ) : data,
+        loading : pageLoading,
+        onItemsRendered : ev => {
+            onItemsRendered && onItemsRendered( ev );
+            const { first, last } = ev;
+            setFirstVisible( first );
+            setLastVisible( last );
+        },
+        columns,
     };
+    //
     return (
         <Rows {...props} {...passthru} />
     );
@@ -148,6 +180,9 @@ Rows.propTypes = {
     /** Specifies the width of the rows in pixels. */
     width : PropTypes.number,
 
+    /** When `true` a loading modal is displayed over the rows. */
+    loading : PropTypes.bool,
+
     /** Cell width applied when a column has no `width` field or `columns` is empty. */
     cellWidth : PropTypes.number,
 
@@ -160,6 +195,11 @@ Rows.propTypes = {
     /** Row height. */
     rowHeight : PropTypes.number,
 
+    /**
+     * Called as items are rendered.  
+     * `onItemsRendered={ ({ first, last }) => console.log("first index",first,"last index",last)}`
+     */
+    onItemsRendered : PropTypes.func,
 }
 
 Rows.defaultProps = {
@@ -167,6 +207,8 @@ Rows.defaultProps = {
     data : [],
     height : 600,
     width : 800,
+
+    loading : false,
 
     cellWidth : 150,
     columnTransform : ucwords,

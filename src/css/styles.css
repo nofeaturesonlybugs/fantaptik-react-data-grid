@@ -104,3 +104,13 @@ div.data-grid-columns {
     border: 1px solid #eeeeee;
     border-collapse: collapse;
 }
+
+/**
+ * Data grid loading overlay.
+ */
+.data-grid-loading {
+    height : 100%;
+    background-color : #aaaaaa;
+    opacity : .15;
+    z-index : 1000;
+}

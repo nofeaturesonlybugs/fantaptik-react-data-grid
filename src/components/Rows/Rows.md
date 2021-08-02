@@ -67,3 +67,23 @@ const pages = usePages( { page : 1, perPage : 25, itemCount : data.length } );
     <Rows data={pages.slice( data )} height={640} />
 </>
 ```
+
+### `onItemsRendered` Event  
+
+##### NB: Note the indeces correspond to the visible rows and not the entire dataset.  
+```jsx
+const [first, setFirst] = React.useState( 0 );
+const [last, setLast] = React.useState( 0 );
+const onItemsRendered = ( { first, last } ) => {
+    setFirst( first );
+    setLast( last );
+}
+const pages = usePages( { page : 1, perPage : 25, itemCount : data.length } );
+<>
+    <pre>First index: {first}</pre>
+    <pre>Last index: {last}</pre>
+    <PerPage perPage={pages.perPage} onPerPage={pages.setPerPage} />
+    <Page total={pages.total} page={pages.page} onPage={pages.setPage} />
+    <Rows data={pages.slice( data )} height={640} onItemsRendered={onItemsRendered} />
+</>
+```

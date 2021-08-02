@@ -49,9 +49,10 @@ const Page = ( { className, disabled, page, total, onPage, ...props } ) => {
     );
 }
 
-const ContextPage = ( props ) => {
-    const { pages : { page, total, setPage } } = React.useContext( GridContext );
+const ContextPage = ( { disabled, ...props } ) => {
+    const { flags : { loading }, pages : { page, total, setPage } } = React.useContext( GridContext );
     const passthru = {
+        disabled : disabled || loading,
         page, total, onPage : setPage,
     };
     return (

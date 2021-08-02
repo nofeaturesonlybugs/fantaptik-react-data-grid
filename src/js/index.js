@@ -14,6 +14,7 @@ export const checkGte = ( n, gte ) => {
 
 /**
  * `getColumns` accepts a data row and returns a `column[]`.  
+ * 
  * @function
  * @param {Object} row A data row.
  * @param {function} transform Function to transform column name; `name => name.toLowerCase()`.
@@ -65,4 +66,40 @@ export const ucfirst = ( [ first, ...rest ] ) => first.toLocaleUpperCase( naviga
  */
 export const ucwords = str => typeof( str ) !== "string" ? "" : str.split( /[ _-]+/g ).map( ucfirst ).join( ' ' );
 
-export default { checkGte, getColumns, jsonPrintFunction, ucfirst, ucwords };
+/**
+ * `reject` returns a Promise that will reject after a `timeout` with `result`.
+ * 
+ * @function
+ * @param {number} timeout The timeout after which the Promise rejects.
+ * @param {object} result The result to pass to the Promise.catch() method.
+ */
+export const reject = ( timeout, result ) => {
+    return new Promise( (resolve, reject ) => {
+        setTimeout( () => {
+            reject( result )
+        }, timeout );
+    } );
+}
+
+/**
+ * `resolve` returns a Promise that will resolve after a `timeout` with `result`.
+ * 
+ * @function
+ * @param {number} timeout The timeout after which the Promise resolves.
+ * @param {object} result The result to pass to the Promise.then() method.
+ */
+export const resolve = ( timeout, result ) => {
+    return new Promise( (resolve, reject ) => {
+        setTimeout( () => {
+            resolve( result )
+        }, timeout );
+    } );
+}
+
+export default { 
+    checkGte, 
+    getColumns, 
+    jsonPrintFunction, 
+    reject, resolve, 
+    ucfirst, ucwords,
+};

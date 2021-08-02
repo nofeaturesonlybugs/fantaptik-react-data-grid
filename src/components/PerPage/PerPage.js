@@ -31,9 +31,10 @@ const PerPage = ( { className, disabled, perPage, values, onPerPage, ...props } 
     );
 }
 
-const ContextPerPage = ( props ) => {
-    const { pages : { perPage, setPerPage } } = React.useContext( GridContext );
+const ContextPerPage = ( { disabled, ...props } ) => {
+    const { flags : { loading }, pages : { perPage, setPerPage } } = React.useContext( GridContext );
     const passthru = {
+        disabled : disabled || loading,
         perPage, onPerPage : setPerPage,
     };
     return (
