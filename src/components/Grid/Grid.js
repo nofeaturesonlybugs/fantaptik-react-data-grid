@@ -8,6 +8,8 @@ import useDataGrid from '../../hooks/useDataGrid';
 import Context from './context';
 import GridHeader from './GridHeader';
 import GridFooter from './GridFooter';
+import GridFeedProvider from './GridFeedProvider';
+import GridPagesProvider from './GridPagesProvider';
 import Buttons from '../Buttons/Buttons';
 import Page from '../Page/Page';
 import PerPage from '../PerPage/PerPage';
@@ -24,6 +26,7 @@ const Grid = ( { autoChildren, children, className, data = [], sample = {}, ...p
     className = merge`${className} data-grid`;
     //
     let header, footer, rows = {};
+    let others = [];
     if( autoChildren === true ) {
         React.Children.map( children, child => {
             switch( child.type ) {
@@ -39,6 +42,10 @@ const Grid = ( { autoChildren, children, className, data = [], sample = {}, ...p
                 case Rows:
                     rows = child;
                     break;
+                
+                default:
+                    others.push( child );
+                    break;
             }
         } );
         children = (
@@ -51,6 +58,7 @@ const Grid = ( { autoChildren, children, className, data = [], sample = {}, ...p
                     {rows ? rows : null}
                 </Position.Fill>
                 {footer ? footer : null}
+                {others}
             </>
         );
     }
@@ -71,6 +79,8 @@ Grid.Footer = GridFooter;
 Grid.Buttons = Buttons.ContextButtons;
 Grid.Page = Page.ContextPage;
 Grid.PerPage = PerPage.ContextPerPage;
+Grid.FeedProvider = GridFeedProvider;
+Grid.PagesProvider = GridPagesProvider;
 Grid.Rows = Rows.ContextRows;
 Grid.SampleRow = SampleRow.ContextSampleRow;
 

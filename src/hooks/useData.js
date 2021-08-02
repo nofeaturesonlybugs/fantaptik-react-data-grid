@@ -32,7 +32,7 @@ const useData = ( {
 } = {} ) => {
     __data = Array.isArray( __data ) ? __data : [];
     //
-    const [data, setData] = React.useState( __data );
+    const [data, stateData] = React.useState( __data );
     const [sample, setSample] = React.useState( __sample );
     //
     React.useEffect( () => {
@@ -44,7 +44,12 @@ const useData = ( {
             // each column.
             setSample( data[ 0 ] );
         }
-    }, [data.data] );
+    }, [data] );
+    //
+    const setData = value => {
+        value = Array.isArray( value ) ? value : [];
+        stateData( value );
+    }
     //
     const appendData = value => {
         value = Array.isArray( value ) ? value : [];

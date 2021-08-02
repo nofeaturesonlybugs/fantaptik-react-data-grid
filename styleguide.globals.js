@@ -2,8 +2,8 @@ import data from './mock/mock-data';
 
 import conf from './src/conf/conf';
 
-import { getColumns, jsonPrintFunction, ucwords } from './src/js';
-import { useColumns, useData, useDataGrid, usePages } from './src/hooks';
+import { getColumns, jsonPrintFunction, reject, resolve, ucwords } from './src/js';
+import { useColumns, useData, useDataGrid, usePages, useProvider } from './src/hooks';
 
 import Buttons from './src/components/Buttons/Buttons';
 import ColumnOrder from './src/components/ColumnOrder/ColumnOrder';
@@ -19,7 +19,7 @@ global.dataSample = {
     first_name      : "123456780123456780123456780",
     last_name       : "123456780123456780123456780",
     birthday        : "05/26/1999",
-    email           : "123456780123456780123456780",
+    email           : "powbridgeel@merriam-webster.com",
     gender          : "123456780123456780",
     married         : false,
     country         : "IT",
@@ -38,6 +38,8 @@ global.conf = conf;
 
 // src/js...
 global.getColumns = getColumns;
+global.reject = reject;
+global.resolve = resolve;
 global.ucwords = ucwords;
 
 // For printing hooks in mddocs/hooks.md
@@ -47,6 +49,7 @@ global.useColumns = useColumns;
 global.useData = useData;
 global.useDataGrid = useDataGrid;
 global.usePages = usePages;
+global.useProvider = useProvider;
 
 global.Buttons = Buttons;
 global.ColumnOrder = ColumnOrder;

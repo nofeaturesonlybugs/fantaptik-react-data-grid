@@ -47,7 +47,7 @@ const usePages = ( {
     //
     // Our incoming values need to make sense.
     __itemCount = checkGte( __itemCount, 0 );
-    __perPage = checkGte( __perPage, 1 );
+    __page = checkGte( __page, 1 );
     __perPage = checkGte( __perPage, 1 );
     const __total = Math.ceil( __itemCount / __perPage );
     //
@@ -64,7 +64,7 @@ const usePages = ( {
         if( recalcTotal != total ) {
             stateTotal( recalcTotal );
         }
-        const recalcPage = page > recalcTotal ? recalcTotal : page;
+        const recalcPage = checkGte( page > recalcTotal ? recalcTotal : page, 1 );
         if( recalcPage != page ) {
             statePage( recalcPage );
         }
@@ -77,7 +77,7 @@ const usePages = ( {
         if( recalcTotal != total ) {
             stateTotal( recalcTotal );
         }
-        const recalcPage = page > recalcTotal ? recalcTotal : page;
+        const recalcPage = checkGte( page > recalcTotal ? recalcTotal : page, 1 );
         if( recalcPage != page ) {
             statePage( recalcPage );
         }
