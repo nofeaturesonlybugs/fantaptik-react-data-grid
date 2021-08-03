@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>hooks/useUi.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#checkGte">checkGte</a></li><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#jsonPrintFunction">jsonPrintFunction</a></li><li><a href="global.html#ucfirst">ucfirst</a></li><li><a href="global.html#ucwords">ucwords</a></li><li><a href="global.html#useColumns">useColumns</a></li><li><a href="global.html#useColumnsDefaultResult">useColumnsDefaultResult</a></li><li><a href="global.html#useData">useData</a></li><li><a href="global.html#useDataDefaultResult">useDataDefaultResult</a></li><li><a href="global.html#useDataGrid">useDataGrid</a></li><li><a href="global.html#useDataGridDefaultResult">useDataGridDefaultResult</a></li><li><a href="global.html#usePages">usePages</a></li><li><a href="global.html#usePagesDefaultResult">usePagesDefaultResult</a></li><li><a href="global.html#useUi">useUi</a></li><li><a href="global.html#useUiDefaultResult">useUiDefaultResult</a></li><li><a href="global.html#useView">useView</a></li><li><a href="global.html#useViewDefaultResult">useViewDefaultResult</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">hooks/useUi.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+
+import { ucwords } from '../js';
+
+/**
+ * The properties that can be passed to the `useUi` hook.
+ * 
+ * @typedef useUiProps
+ * @type {Object}
+ * @property {Object} columns Initial props for columns.
+ * @property {number} [columns.width=150] Default column width.
+ * @property {function} [columns.transform=ucwords] 
+ *                      Default field-name-to-field-label function:
+ *                      &lt;br />
+ *                      `str => transformedStr`.
+ * @property {Object} rows Initial props for rows.
+ * @property {number} [rows.gutter=0] Default row gutter (spacing between rows).
+ * @property {number} [rows.padding=0] Default row-cell padding.
+ */
+
+/**
+ * The result type for the `useUi` hook.
+ * 
+ * @typedef useUiResult
+ * @type {Object}
+ * @property {Object} columns Columns management object.
+ * @property {number} [columns.width=150] Default column width.
+ * @property {function} [columns.transform=ucwords] 
+ *                      Default field-name-to-field-label function:
+ *                      &lt;br />
+ *                      `str => transformedStr`.
+ * @property {function} [columns.setWidth]
+ *                      `result.columns.setWidth( 175 ); // Default width is now 175px`
+ * @property {function} [columns.setTransform] 
+ *                      `result.columns.setTransform( str => str ); // Column transform is now a passthru function.`
+ * @property {Object} rows Rows management object.
+ * @property {number} [rows.gutter=0] Default row gutter (spacing between rows).
+ * @property {number} [rows.padding=0] Default row-cell padding.
+ * @property {function} [rows.setGutter]
+ *                      `result.rows.setGutter( 10 ); // Gutter is now 10px`
+ * @property {function} [rows.setPadding]
+ *                      `result.rows.setPadding( 8 ); // Padding is now 8px`
+ */
+
+/**
+ * @ignore
+ */
+const useUiColumns = ( { 
+    width : __width = 150, // TODO Make a configurable export or something.
+    transform : __transform = ucwords, // TODO Make a configurable export or something.
+} = {} ) => {
+    const [width, setWidth] = React.useState( __width );
+    const [transform, setTransform] = React.useState( __transform );
+    return {
+        width, setWidth,
+        transform, setTransform,
+    };
+}
+
+/**
+ * @ignore
+ */
+const useUiRows = ( {
+    gutter : defaultGutter = 0, // TODO Make a configurable export or something.
+    padding : defaultPadding = 0, // TODO Make a configurable export or something.
+} = {} ) => {
+    const [gutter, setGutter] = React.useState( defaultGutter );
+    const [padding, setPadding] = React.useState( defaultPadding );
+    return {
+        gutter, setGutter,
+        padding, setPadding,
+    };
+}
+
+/**
+ * `useUi` creates a UI management object.
+ * 
+ * @function
+ * @param {useUiProps} [props={}] The initial hook values.
+ * @returns {useUiResult}
+ */
+const useUi = ( { 
+    columns : defaultColumns = {},
+    rows : defaultRows = {}
+} = {} ) => {
+    const columns = useUiColumns( defaultColumns || {} );
+    const rows = useUiRows( defaultRows || {} );
+    //
+    return {
+        columns,
+        rows,
+    };
+}
+
+/**
+ * A default `useUiResult`.
+ * 
+ * @type {useUiResult}
+ */
+export const useUiDefaultResult = {
+    columns : {
+        width : 0, setWidth : width => null,
+        transform : ucwords, setTransform : transform => null,
+    },
+    rows : {
+        gutter : 0, setGutter : gutter => null,
+        padding : 0, setPadding : padding => null,
+    },
+};
+
+/**
+ * A default `useUiResult`.
+ * 
+ * @type {useUiResult}
+ */
+useUi.defaultResult = useUiDefaultResult;
+
+export default useUi;</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Fri Jul 30 2021 11:39:18 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

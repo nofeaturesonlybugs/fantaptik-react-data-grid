@@ -1,0 +1,116 @@
+/**
+ * ColumnOrder control.
+ */
+div.column-order .column {
+    position: relative;
+    border-radius: 12px;
+    background-color: #ededed;
+    padding: 4px;
+}
+
+div.column-order .column.no-show span {
+    color : #ababab;
+}
+
+div.column-order .column:not(:first-child) {
+    margin-top: 4px;
+}
+
+.column {
+    position: relative;
+}
+
+.column button.move-up {
+    margin-right: 4px;
+}
+
+.column button.move-down {
+    margin-right: 8px;
+}
+
+.column .toggle {
+    display: inline;
+    position: absolute;
+    right: 0;
+}
+
+/**
+ * Page selection control.
+ */
+
+div.page {
+    display : inline-block;
+}
+
+.page-select {
+    margin-left: 8px;
+    margin-right: 8px;
+    display: inline-block;
+    max-width: 80px;
+}
+
+.page-select input {
+    text-align: center;
+}
+
+.page-select ul, .page-select ul li {
+    text-align: right;
+}
+
+/**
+ * PerPage selection control.
+ */
+div.per-page {
+    display: inline-block;
+}
+
+div.per-page > *{
+    display: inline-block;
+}
+
+div.per-page .per-page-select {
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: 80px;
+}
+
+div.per-page .per-page-select input {
+    text-align: center;
+}
+
+div.per-page .per-page-select ul,
+div.per-page .per-page-select ul li {
+    text-align: right;
+}
+
+/**
+ * Data grid columns
+ */
+div.data-grid-columns {
+    overflow: hidden !important;
+    background-color: #f6f6f6;
+    color: #424242;
+    font-weight: bold;
+    vertical-align: bottom;
+    border: 1px solid #eeeeee;
+    border-collapse: collapse;
+}
+
+/**
+ * Data grid rows.
+ */
+.data-grid-rows .row {
+    vertical-align: bottom;
+    border: 1px solid #eeeeee;
+    border-collapse: collapse;
+}
+
+/**
+ * Data grid loading overlay.
+ */
+.data-grid-loading {
+    height : 100%;
+    background-color : #aaaaaa;
+    opacity : .15;
+    z-index : 1000;
+}

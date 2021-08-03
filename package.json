@@ -1,0 +1,71 @@
+{
+  "name": "@fantaptik/react-data-grid",
+  "version": "0.1.0",
+  "description": "@fantaptik React component(s) for viewing data using Materialize CSS.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build-dev": "npx webpack --mode development",
+    "build": "npx webpack --mode production",
+    "alldocs": "npm run-script jsdoc && npm run-script styleguidist-build",
+    "jsdoc": "jsdoc -c jsdoc.config.js -R README.md",
+    "styleguidist": "npx styleguidist server",
+    "styleguidist-build": "npx styleguidist build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nofeaturesonlybugs/fantaptik-react-data-grid.git"
+  },
+  "keywords": [
+    "@fantaptik",
+    "materialize",
+    "materializecss",
+    "data",
+    "datagrid",
+    "datagridview",
+    "react",
+    "reactjs",
+    "ui"
+  ],
+  "author": "Nofeatures Onlybugs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nofeaturesonlybugs/fantaptik-react-data-grid/issues"
+  },
+  "homepage": "https://github.com/nofeaturesonlybugs/fantaptik-react-data-grid#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.14.9",
+    "@babel/preset-react": "^7.10.4",
+    "@fantaptik/core": "^0.2.1",
+    "@fantaptik/react-material": "^0.3.1",
+    "@fantaptik/webpack-config": "^0.2.0",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-box-model": "^1.2.1",
+    "css-loader": "^4.2.2",
+    "docdash": "^1.2.0",
+    "hoist-non-react-statics": "^3.3.2",
+    "jsdoc": "^3.6.7",
+    "materialize-css": "^1.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-styleguidist": "^11.0.8",
+    "react-window": "^1.8.6",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "peerDependencies": {
+    "@fantaptik/core": "^0.2.1",
+    "@fantaptik/webpack-config": "^0.2.0",
+    "@fantaptik/react-material": "^0.3.1",
+    "css-box-model": "^1.2.1",
+    "hoist-non-react-statics": "^3.3.2",
+    "materialize-css": "^1.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-window": "^1.8.6"
+  }
+}
