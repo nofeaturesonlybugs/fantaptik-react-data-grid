@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * The properties that can be passed to the `useData` hook.
  * 
- * @typedef useDataProps
+ * @typedef hooks.useDataProps
  * @type {Object}
  * @property {any[]} [data=[]] The initial data.
  * @property {Object} [sample] A sample row representative of a row in `data`.
@@ -12,7 +12,7 @@ import React from 'react';
 /**
  * The result type for the `useData` hook.
  * 
- * @typedef useDataResult
+ * @typedef hooks.useDataResult
  * @type {Object}
  * @property {any[]} data       The data rows.
  * @property {Object} sample    The sample row.
@@ -23,8 +23,12 @@ import React from 'react';
 /**
  * `useData` creates a data management object.
  * 
- * @param {useDataProps} props Initial `data` hook props.
- * @returns {useDataResult}
+ * @name hooks.useData
+ * @static
+ * @function
+ * 
+ * @param {hooks.useDataProps} props Initial `data` hook props.
+ * @returns {hooks.useDataResult}
  */
 const useData = ( { 
     data : __data = [],
@@ -65,7 +69,10 @@ const useData = ( {
 /**
  * A default `useDataResult`.
  * 
- * @type {useDataResult}
+ * @name hooks.useDataDefaultResult
+ * @static
+ * 
+ * @type {hooks.useDataResult}
  */
 export const useDataDefaultResult = {
     data : [], appendData : data => null, setData : data => null,

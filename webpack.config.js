@@ -86,7 +86,10 @@ const makeConf = () => {
         },
     };
 
-    config = fantaptikSource( config );
+    // NB: Uncomment to build targeting fantaptik source.
+    // config = fantaptikSource( config );
+
+    // Want single react instance.
     config = singleReact( config );
 
     return config;

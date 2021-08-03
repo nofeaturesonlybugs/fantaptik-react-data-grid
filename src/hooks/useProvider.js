@@ -5,14 +5,14 @@ import { check } from '@fantaptik/core';
 /**
  * The properties that can be passed to the `useProvider` hook.
  * 
- * @typedef useProviderProps
+ * @typedef hooks.useProviderProps
  * @type {object}
  */
 
 /**
  * The result type for the `useProvider` hook.
  * 
- * @typedef useProviderResult
+ * @typedef hooks.useProviderResult
  * @type {Object}
  * @property {number} firstVisible Index of first visible item in rows.
  * @property {number} lastVisible Index of last visible item in rows.
@@ -27,9 +27,12 @@ import { check } from '@fantaptik/core';
  * through the grid.  A `Grid.Provider` component can use this information to determine if it needs to pull
  * more data from an API as the user reaches the end of the grid.
  * 
+ * @name hooks.useProvider
+ * @static
  * @function
- * @param {useProviderProps} Initial `scroll` hook props.
- * @returns {useProviderResult}
+ * 
+ * @param {hooks.useProviderProps} Initial `scroll` hook props.
+ * @returns {hooks.useProviderResult}
  */
 const useProvider = () => {
     const [firstVisible, stateFirstVisible] = React.useState( 0 );
@@ -58,7 +61,10 @@ const useProvider = () => {
 /**
  * A default `useProviderResult`.
  * 
- * @type {useProviderResult}
+ * @name hooks.useProviderDefaultResult
+ * @static
+ * 
+ * @type {hooks.useProviderResult}
  */
 export const useProviderDefaultResult = {
     firstVisible : 0, setFirstVisible : firstVisible => null,

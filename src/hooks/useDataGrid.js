@@ -8,12 +8,12 @@ import useProvider from './useProvider';
 /**
  * The result type for the `useDataGrid` hook.
  * 
- * @typedef useDataGridResult
+ * @typedef hooks.useDataGridResult
  * @type {Object}
- * @property {useColumnsResult} columns The `columns` management object.
- * @property {useDataResult} data The `data` management object.
- * @property {usePagesResult} pages The `pages` management object.
- * @property {useProviderResult} provider The `provider` management object.
+ * @property {hooks.useColumnsResult} columns The `columns` management object.
+ * @property {hooks.useDataResult} data The `data` management object.
+ * @property {hooks.usePagesResult} pages The `pages` management object.
+ * @property {hooks.useProviderResult} provider The `provider` management object.
  * @property {Object}   flags Flags and switches that control behavior.
  * @property {bool}     flags.loading   `true` indicates data is loading.  
  * @property {bool}     flags.pageLoading `true` indicates a page is loading when data is viewed as pages.
@@ -26,13 +26,16 @@ import useProvider from './useProvider';
 /**
  * `useDataGrid` creates a data grid management object.
  * 
+ * @name hooks.useDataGrid
+ * @static
  * @function
+ * 
  * @param {Object} props The initial hook values.
- * @param {useColumnsProps} [props.columns={}] Initial `columns` hook props; see {@link useColumns}.
- * @param {useDataProps} [props.data={}]  Initial `data` hook props; see {@link useData}.
- * @param {usePagesProps} [props.pages={}]  Initial `pages` hook props; see {@link usePages}.
- * @param {useProviderProps} [props.provider={}] Initial `provider` hook props; see {@link useProvider}.
- * @returns {useDataGridResult}
+ * @param {hooks.useColumnsProps} [props.columns={}] Initial `columns` hook props; see {@link useColumns}.
+ * @param {hooks.useDataProps} [props.data={}]  Initial `data` hook props; see {@link useData}.
+ * @param {hooks.usePagesProps} [props.pages={}]  Initial `pages` hook props; see {@link usePages}.
+ * @param {hooks.useProviderProps} [props.provider={}] Initial `provider` hook props; see {@link useProvider}.
+ * @returns {hooks.useDataGridResult}
  */
 const useDataGrid = ( { 
     columns : __columns = {},
@@ -67,7 +70,10 @@ const useDataGrid = ( {
 /**
  * A default `useDataGridResult`.
  * 
- * @type {useDataGridResult}
+ * @name hooks.useDataGridDefaultResult
+ * @static
+ * 
+ * @type {hooks.useDataGridResult}
  */
 export const useDataGridDefaultResult = {
     columns : useColumns.defaultResult,

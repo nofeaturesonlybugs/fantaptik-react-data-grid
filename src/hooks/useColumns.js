@@ -5,7 +5,7 @@ import { check } from '@fantaptik/core';
 /**
  * `column` describes a column.
  * 
- * @typedef column
+ * @typedef hooks.column
  * @type {Object}
  * @property {string} name The column name; this would be the lookup key into a data row to get the value.
  * @property {string} label Friendly label when displaying column name to end user.
@@ -17,7 +17,7 @@ import { check } from '@fantaptik/core';
 /**
  * The properties that can be passed to the `useColumns` hook.
  * 
- * @typedef useColumnsProps
+ * @typedef hooks.useColumnsProps
  * @type {Object}
  * @property {column[]} columns Array of `column`s in the data.
  */
@@ -25,9 +25,9 @@ import { check } from '@fantaptik/core';
 /**
  * The result type for the `useColumns` hook.
  * 
- * @typedef useColumnsResult
+ * @typedef hooks.useColumnsResult
  * @type {Object}
- * @property {column[]} columns Array of `column`s in the data in the order to be rendered.
+ * @property {hooks.column[]} columns Array of `column`s in the data in the order to be rendered.
  * @property {function} setColumns      `result.setColumns( column[] ); // Set columns to new array.`
  * @property {function} swap            `result.swap( 2, 3 ); // Swap order of columns with indeces 2 & 3`
  * @property {function} hide            `result.hide( 2 ); // Hide column with index 2`
@@ -37,9 +37,12 @@ import { check } from '@fantaptik/core';
 /**
  * `useColumns` creates a columns management object.
  * 
+ * @name hooks.useColumns
+ * @static
  * @function
- * @param {useColumnsProps} props Initial `columns` hook props.
- * @returns {useColumnsResult}
+ * 
+ * @param {hooks.useColumnsProps} props Initial `columns` hook props.
+ * @returns {hooks.useColumnsResult}
  */
 const useColumns = ( { 
     columns : __columns = [],
@@ -103,7 +106,10 @@ const useColumns = ( {
 /**
  * A default `useColumnsResult`.
  * 
- * @type {useColumnsResult}
+ * @name hooks.useColumnsDefaultResult
+ * @static
+ * 
+ * @type {hooks.useColumnsResult}
  */
 export const useColumnsDefaultResult = {
     columns : [], setColumns : columns => null,
