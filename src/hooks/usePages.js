@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkGte } from '../js';
+import { check } from '@fantaptik/core';
 
 /**
  * The properties that can be passed to the `usePages` hook.
@@ -46,9 +46,9 @@ const usePages = ( {
 } = {} ) => {
     //
     // Our incoming values need to make sense.
-    __itemCount = checkGte( __itemCount, 0 );
-    __page = checkGte( __page, 1 );
-    __perPage = checkGte( __perPage, 1 );
+    __itemCount = check.gte( __itemCount, 0 );
+    __page = check.gte( __page, 1 );
+    __perPage = check.gte( __perPage, 1 );
     const __total = Math.ceil( __itemCount / __perPage );
     //
     const [itemCount, stateItemCount] = React.useState( __itemCount );
@@ -57,33 +57,33 @@ const usePages = ( {
     const [total, stateTotal] = React.useState( __total );
     //
     const setItemCount = value => {
-        value = checkGte( value, 0 );
+        value = check.gte( value, 0 );
         stateItemCount( value );
         // When changing itemCount we may need to adjust total and/or page.
         const recalcTotal = Math.ceil( value / perPage );
         if( recalcTotal != total ) {
             stateTotal( recalcTotal );
         }
-        const recalcPage = checkGte( page > recalcTotal ? recalcTotal : page, 1 );
+        const recalcPage = check.gte( page > recalcTotal ? recalcTotal : page, 1 );
         if( recalcPage != page ) {
             statePage( recalcPage );
         }
     }
     const setPerPage = value => {
-        value = checkGte( value, 1 );
+        value = check.gte( value, 1 );
         statePerPage( value );
         // When changing perPage we may need to adjust total and/or page.
         const recalcTotal = Math.ceil( itemCount / value );
         if( recalcTotal != total ) {
             stateTotal( recalcTotal );
         }
-        const recalcPage = checkGte( page > recalcTotal ? recalcTotal : page, 1 );
+        const recalcPage = check.gte( page > recalcTotal ? recalcTotal : page, 1 );
         if( recalcPage != page ) {
             statePage( recalcPage );
         }
     }
     const setPage = value => {
-        value = checkGte( value, 1 );
+        value = check.gte( value, 1 );
         if( value > total ) {
             value = total;
         }

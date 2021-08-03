@@ -20,12 +20,12 @@ When `fetch` resolves it should return an `Object[]` (array of objects) that is 
 const randTimeout = () => 200 + Math.floor( Math.random() * 800 );
 // count() returns a Promise that simulates contacting an API to get a record count.
 const count = ( ctx ) => {
-    return resolve( randTimeout(), data.length );
+    return promise.resolve( randTimeout(), data.length );
 };
 // fetch() returns a Promise that simulates contacting an API to get a page of data.
 const fetch = ( ctx ) => {
     const { pages : { slice } } = ctx;
-    return resolve( randTimeout(), slice( data ) );
+    return promise.resolve( randTimeout(), slice( data ) );
 };
 <Grid autoChildren={false} sample={dataSample}>
     <div>

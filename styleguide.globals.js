@@ -1,8 +1,11 @@
+import { promise } from '@fantaptik/core';
+
 import data from './mock/mock-data';
 
 import conf from './src/conf/conf';
 
-import { getColumns, jsonPrintFunction, reject, resolve, ucwords } from './src/js';
+import { getColumns, jsonPrintFunction, ucwords } from './src/js';
+// import { getColumns, jsonPrintFunction, reject, resolve, ucwords } from './src/js'; // TODO RM
 import { useColumns, useData, useDataGrid, usePages, useProvider } from './src/hooks';
 
 import Buttons from './src/components/Buttons/Buttons';
@@ -13,6 +16,8 @@ import Page from './src/components/Page/Page';
 import PerPage from './src/components/PerPage/PerPage';
 import Rows from './src/components/Rows/Rows';
 import SampleRow from './src/components/SampleRow/SampleRow';
+
+global.promise = promise;
 
 global.dataSample = {
     id              : 999999,
@@ -38,8 +43,9 @@ global.conf = conf;
 
 // src/js...
 global.getColumns = getColumns;
-global.reject = reject;
-global.resolve = resolve;
+// TODO RM
+// global.reject = reject;
+// global.resolve = resolve;
 global.ucwords = ucwords;
 
 // For printing hooks in mddocs/hooks.md

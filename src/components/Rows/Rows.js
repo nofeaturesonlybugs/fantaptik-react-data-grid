@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import { VariableSizeGrid } from 'react-window';
 
+import { check } from '@fantaptik/core';
 import { merge, Position } from '@fantaptik/react-material';
 
-import { checkGte, getColumns, ucwords } from '../../js';
+import { getColumns, ucwords } from '../../js';
 
 import '../../css/styles.css';
 
@@ -30,7 +31,7 @@ const Rows = ( {
     // If columns is not provided or not an array we'll gather them from the first available row with the useColumns hook.
     if( ! Array.isArray( columns ) ) {
         columns = getColumns( data.length > 0 ? data[0] : {}, columnTransform );
-        columns.map( column => column.width = checkGte( column.width, cellWidth ) );
+        columns.map( column => column.width = check.gte( column.width, cellWidth ) );
     } else {
         columns.map( column => column.width = column.width > 0 ? column.width : cellWidth );
     }

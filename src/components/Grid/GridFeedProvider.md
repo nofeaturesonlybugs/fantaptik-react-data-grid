@@ -28,7 +28,7 @@ When the size of loaded data equals the initial count the provider will stop cal
 const randTimeout = () => 200 + Math.floor( Math.random() * 800 );
 // count() returns a Promise that simulates contacting an API to get a record count.
 const count = ( ctx ) => {
-    return resolve( randTimeout(), data.length );
+    return promise.resolve( randTimeout(), data.length );
 };
 // fetch() returns a Promise that simulates contacting an API to get a page of data.
 const fetch = ( ctx ) => {
@@ -38,7 +38,7 @@ const fetch = ( ctx ) => {
     const { data : { data : existing } } = ctx;
     // Alias existing data and then slice full data based off the length of existing to return
     // next section of data.
-    return resolve( randTimeout(), data.slice( existing.length, existing.length + 100 ) );
+    return promise.resolve( randTimeout(), data.slice( existing.length, existing.length + 100 ) );
 };
 <Grid sample={dataSample} style={{ height : "600px" }}>
     <Grid.FeedProvider count={count} fetch={fetch} />
