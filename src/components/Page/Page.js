@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { check } from '@fantaptik/core';
 import { merge, Select } from '@fantaptik/react-material';
 
 import GridContext from '../Grid/context';
 import Buttons from '../Buttons/Buttons';
 
-import { checkGte } from '../../js';
-
 import '../../css/styles.css';
 
 const Page = ( { className, disabled, page, total, onPage, ...props } ) => {
-    page = checkGte( page, 1 );
-    total = checkGte( total, 1 );
+    page = check.gte( page, 1 );
+    total = check.gte( total, 1 );
     //
     const handlers = {
         first : () => onPage && onPage( 1 ),

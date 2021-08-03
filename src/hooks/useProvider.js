@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkGte } from '../js';
+import { check } from '@fantaptik/core';
 
 /**
  * The properties that can be passed to the `useProvider` hook.
@@ -36,14 +36,14 @@ const useProvider = () => {
     const [lastVisible, stateLastVisible] = React.useState( 0 );
     //
     const setFirstVisible = value => {
-        value = checkGte( value, 0 );
+        value = check.gte( value, 0 );
         if( value !== firstVisible ) {
             stateFirstVisible( value );
         }
     }
     //
     const setLastVisible = value => {
-        value = checkGte( value, 0 );
+        value = check.gte( value, 0 );
         if( value !== lastVisible ) {
             stateLastVisible( value );
         }

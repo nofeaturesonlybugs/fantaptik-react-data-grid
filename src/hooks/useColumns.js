@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkGte } from '../js';
+import { check } from '@fantaptik/core';
 
 /**
  * `column` describes a column.
@@ -49,8 +49,8 @@ const useColumns = ( {
         let { name = "", label = "", width = 0, height = 0, visible = true } = column;
         visible = visible === true;
         //
-        width = checkGte( width, 0 );
-        height = checkGte( height, 0 );
+        width = check.gte( width, 0 );
+        height = check.gte( height, 0 );
         //
         return { name, label, width, height, visible };
     } );

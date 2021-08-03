@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { check } from '@fantaptik/core';
 import { merge, Select } from '@fantaptik/react-material';
 
 import GridContext from '../Grid/context';
-import { checkGte } from '../../js';
 
 import '../../css/styles.css';
 
 const PerPage = ( { className, disabled, perPage, values, onPerPage, ...props } ) => {
     values = Array.isArray( values ) ? values : [25, 100, 250, 500, 1000];
-    perPage = checkGte( perPage, 1 );
+    perPage = check.gte( perPage, 1 );
     //
     const options = values.map( ( value, n ) => <Select.Option key={n + 1} value={value} label={value.toString()} /> );
     //

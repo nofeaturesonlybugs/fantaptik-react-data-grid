@@ -1,18 +1,4 @@
 /**
- * `checkGte` returns `n >= gte ? n : gte`.
- * 
- * @function
- * @param {number} n The number to check.
- * @param {number} gte n must be greater-than-equal to this value.
- * @returns number
- */
-export const checkGte = ( n, gte ) => {
-    n = parseInt( n, 10 );
-    n = n >= gte ? n : gte;
-    return n;
-}
-
-/**
  * `getColumns` accepts a data row and returns a `column[]`.  
  * 
  * @function
@@ -66,40 +52,8 @@ export const ucfirst = ( [ first, ...rest ] ) => first.toLocaleUpperCase( naviga
  */
 export const ucwords = str => typeof( str ) !== "string" ? "" : str.split( /[ _-]+/g ).map( ucfirst ).join( ' ' );
 
-/**
- * `reject` returns a Promise that will reject after a `timeout` with `result`.
- * 
- * @function
- * @param {number} timeout The timeout after which the Promise rejects.
- * @param {object} result The result to pass to the Promise.catch() method.
- */
-export const reject = ( timeout, result ) => {
-    return new Promise( (resolve, reject ) => {
-        setTimeout( () => {
-            reject( result )
-        }, timeout );
-    } );
-}
-
-/**
- * `resolve` returns a Promise that will resolve after a `timeout` with `result`.
- * 
- * @function
- * @param {number} timeout The timeout after which the Promise resolves.
- * @param {object} result The result to pass to the Promise.then() method.
- */
-export const resolve = ( timeout, result ) => {
-    return new Promise( (resolve, reject ) => {
-        setTimeout( () => {
-            resolve( result )
-        }, timeout );
-    } );
-}
-
 export default { 
-    checkGte, 
     getColumns, 
     jsonPrintFunction, 
-    reject, resolve, 
     ucfirst, ucwords,
 };
