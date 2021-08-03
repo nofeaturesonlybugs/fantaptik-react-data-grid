@@ -43,9 +43,6 @@ global.conf = conf;
 
 // src/js...
 global.getColumns = getColumns;
-// TODO RM
-// global.reject = reject;
-// global.resolve = resolve;
 global.ucwords = ucwords;
 
 // For printing hooks in mddocs/hooks.md
