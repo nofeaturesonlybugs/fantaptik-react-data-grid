@@ -84,6 +84,17 @@ div.per-page .per-page-select ul li {
 }
 
 /**
+ * Labels
+ */
+div.page-label {
+    display: inline-block;
+}
+
+div.per-page-label {
+    display: inline-block;
+}
+
+/**
  * Data grid columns
  */
 div.data-grid-columns {

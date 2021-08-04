@@ -11,5 +11,6 @@ const [page, updatePage] = React.useState( 3 );
 <>
     <p>Page is {page}</p>
     <Page total={100} page={page} onPage={updatePage} />
+    <Page.Label total={100} page={page} />
 </>
 ```

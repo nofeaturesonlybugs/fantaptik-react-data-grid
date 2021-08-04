@@ -42,3 +42,9 @@ div.per-page .per-page-select {}        /* Select dropdown. */
 div.data-grid-columns {}            /* Data grid column headers. */
 div.data-grid-rows {}               /* Data grid rows div. */
 ```
+
+##### Labels
+```css
+div.page-label {}                   /* Viewing page X of Y label. */
+div.per-page-label {}               /* Viewing record X of Y of Z label. */
+```

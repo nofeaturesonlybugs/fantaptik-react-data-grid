@@ -7,6 +7,8 @@ import { merge, Select } from '@fantaptik/react-material';
 import GridContext from '../Grid/context';
 import Buttons from '../Buttons/Buttons';
 
+import PageLabel from './PageLabel';
+
 import '../../css/styles.css';
 
 const Page = ( { className, disabled, page, total, onPage, ...props } ) => {
@@ -59,6 +61,9 @@ const ContextPage = ( { disabled, ...props } ) => {
     );
 }
 
+ContextPage.Label = PageLabel.ContextPageLabel;
+
+Page.Label = PageLabel;
 Page.ContextPage = ContextPage;
 
 Page.propTypes = {

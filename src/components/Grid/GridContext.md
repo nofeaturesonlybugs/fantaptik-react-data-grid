@@ -1,37 +1,55 @@
-`Grid.Context` is the React context attached to the `Grid`.
+`Grid` uses a React context to manage state.
 
-##### `Grid.Context.Provider`  
-You don't have to explicitly create any `Grid.Context.Provider` components.  Whenever you render a `Grid` it will automatically wrap all of its children inside a `Grid.Context.Provider` for you.
+### Using Grid.Context  
 
-##### Context-Aware Components  
-Any component prefixed with `Grid.*` will automatically consume the nearest `Grid.Context.Provider`.  In other words a `Grid.Rows` or `Grid.Pages` inside a `Grid` automatically consumes the `Context.Provider` attached to the parent `Grid`.
-
-##### Standalone  
-Most of the context-aware components are wrappers around regular React components.  For example `Grid.Rows` is just a context-aware `Rows` component.  You can use `Rows` as you would any other React component however you will need to manage its properties since it is no longer context-aware.
-
-##### Making Your Own Context-Aware Components  
-
-If you want to create your own components that act as a `Grid.Context.Consumer` then use either of the following examples as a template:
-```jsx
-<Grid data={data}>
-    <Grid.Context.Consumer>
-        { ( { data, ...context } ) => {
-            return (
-                <span>There are {data.length} row(s).</span>
-            );
-        }}
-    </Grid.Context.Consumer>
-</Grid>
-```
+Use either of the following templates to use `Grid.Context`:
 
 ```jsx
-const MyComponent = props => {
-    context = React.useContext( Grid.Context );
+const [toggle, setToggle] = React.useState(false);
+const MyComponent = () => {
     return (
-        <span>There are {context.data.length} row(s).</span>
+        <Grid.Context.Consumer>
+            {ctx => {
+                return (
+                    <pre>{JSON.stringify(ctx, jsonPrintFunction, "\t")}</pre>
+                );
+            }}
+        </Grid.Context.Consumer>
     );
-}
-<Grid data={data}>
-    <MyComponent />
-</Grid>
+};
+<>
+    <Toggle checked={toggle} onClick={() => setToggle( ! toggle )} on="Show Context" off="Hide Context" />
+    {toggle ? <MyComponent /> : null}
+</>
 ```
+
+```jsx
+const [toggle, setToggle] = React.useState(false);
+const MyComponent = () => {
+    const ctx = React.useContext( Grid.Context );
+    return <pre>{JSON.stringify(ctx, jsonPrintFunction, "\t")}</pre>
+};
+<>
+    <Toggle checked={toggle} onClick={() => setToggle( ! toggle )} on="Show Context" off="Hide Context" />
+    {toggle ? <MyComponent /> : null}
+</>
+```
+
+### Context Aware Components  
+
+The following components work in either *standalone* or *context aware* mode:  
+
++ `Buttons`
++ `ColumnOrder` & `ColumnOrder.Column`
++ `Page`
++ `PerPage`
++ `Rows`
++ `SampleRow`
+
+In *standalone* mode the components use props and event handlers and are completely unaware of `Grid.Context`.  You can use them for any purpose like you would any other component.
+
+The *context aware* components are all prefixed with `Grid`.  For example if `<Buttons.PageFirst />` or `<Page />` are *standalone* components their *context aware* versions are `<Grid.Buttons.PageFirst />` and `<Grid.Page />` respectively.  The *context aware* components automatically set props and update the context in response to events; their usage within a `<Grid>` should be mostly seamless.
+
+### Hooks  
+
+Internally `Grid.Context` is set to the result of the `useDataGrid()` custom hook.  The `useDataGrid()` hook is itself a composite of other hooks for pagination, column information, etc.  See `hooks` in the sidebar for their shapes or the `jsdocs` for more documentation.  
