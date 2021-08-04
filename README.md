@@ -5,7 +5,7 @@ A React data grid component library using Materialize CSS for @fantaptik.
 npm install @fantaptik/react-data-grid
 
 # Peer dependencies
-npm install @fantaptik/react-material react-window css-box-model hoist-non-react-statics materialize-css react react-dom
+npm install @fantaptik/core @fantaptik/react-material react-window css-box-model hoist-non-react-statics materialize-css react react-dom
 ```
 
 View the Styleguidist @ https://nofeaturesonlybugs.github.io/fantaptik-react-data-grid/
