@@ -34,5 +34,9 @@ const fetch = ( ctx ) => {
         <Grid.PagesProvider count={count} fetch={fetch} />
     </div>
     <Grid.Rows />
+    <div>
+        <Grid.Page.Label />
+        <Grid.PerPage.Label style={{marginLeft : "10px"}} />
+    </div>
 </Grid>
 ```

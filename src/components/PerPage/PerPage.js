@@ -6,6 +6,8 @@ import { merge, Select } from '@fantaptik/react-material';
 
 import GridContext from '../Grid/context';
 
+import PerPageLabel from './PerPageLabel';
+
 import '../../css/styles.css';
 
 const PerPage = ( { className, disabled, perPage, values, onPerPage, ...props } ) => {
@@ -42,7 +44,10 @@ const ContextPerPage = ( { disabled, ...props } ) => {
     );
 }
 
+ContextPerPage.Label = PerPageLabel.ContextPerPageLabel;
+
 PerPage.ContextPerPage = ContextPerPage;
+PerPage.Label = PerPageLabel;
 
 PerPage.propTypes = {
     /** Set to `true` to disable the controls. */

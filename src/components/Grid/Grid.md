@@ -3,9 +3,14 @@ A `Grid` in action.
 ```jsx
 <Grid autoChildren={false} data={data} sample={dataSample}>
     <div>
-        <Grid.PerPage /><Grid.Page />
+        <Grid.PerPage />
+        <Grid.Page />
     </div>
     <Grid.Rows />
+    <div>
+        <Grid.Page.Label />
+        <Grid.PerPage.Label style={{marginLeft : "10px"}} />
+    </div>
 </Grid>
 ```
 
@@ -35,7 +40,8 @@ const gridStyles = {
         </Grid.Header>
         <Grid.Rows />
         <Grid.Footer>
-            <Grid.PerPage /><Grid.Page />
+            <Grid.Page.Label />
+            <Grid.PerPage.Label style={{marginLeft : "10px"}} />
         </Grid.Footer>
     </Grid>
 </div>
