@@ -25,6 +25,31 @@ const Rows = ( {
     ...props
 } ) => {
     //
+    // We render two react-windows, one of which is for the grid headers, and require their scrolling to remain 
+    // synchronized.  By attaching headerCallback to the header react-window we can set its scroll position to
+    // match the horizontal scroll of the react-window displaying the rows.
+    const [headerRef, setHeaderRef] = React.useState( null );
+    const headerCallback = React.useCallback( node => {
+        setHeaderRef( node );
+    }, [] );
+    //
+    // Attach a ref to the rows react-window.  This enables us to clear the react-window cache when columns changes in
+    // the following hook.
+    const [rowsRef, setRowsRef] = React.useState( null );
+    const rowsCallback = React.useCallback( node => {
+        setRowsRef( node );
+    }, [] );
+    //
+    // Whenever columns changes we need to throw away the react-window cache of sizing.  We do this early in the component
+    // because if we wait until *after* Array.isArray(columns) then we will throw away the cache on every render if columns
+    // are not provided.
+    React.useEffect( () => {
+        if( headerRef ) {
+            headerRef.resetAfterIndices( { columnIndex: 0, rowIndex: 0 } );
+            rowsRef.resetAfterIndices( { columnIndex: 0, rowIndex: 0 } );
+        }
+    }, [columns, headerRef, rowsRef] );
+    //
     // Coerce data to an array.
     data = Array.isArray( data ) ? data : [];
     //
@@ -35,14 +60,6 @@ const Rows = ( {
     } else {
         columns.map( column => column.width = column.width > 0 ? column.width : cellWidth );
     }
-    //
-    // We render two react-windows, one of which is for the grid headers, and require their scrolling to remain 
-    // synchronized.  By attaching headerCallback to the header react-window we can set its scroll position to
-    // match the horizontal scroll of the react-window displaying the rows.
-    const [headerRef, setHeaderRef] = React.useState( null );
-    const headerCallback = React.useCallback( node => {
-        setHeaderRef( node );
-    }, [] );
     // 
     // Filter down to visible columns.
     columns = columns.filter( column => column.visible === true );
@@ -111,6 +128,7 @@ const Rows = ( {
                 {Row}
             </VariableSizeGrid>
             <VariableSizeGrid
+                ref={rowsCallback}
                 className={classes.rows}
                 {...props}
                 height={height - rowHeight} width={width}
