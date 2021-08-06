@@ -6,7 +6,7 @@ import GridContext from './context';
 const GridFeedProvider = ( { count, fetch } ) => {
     const ctx = React.useContext( GridContext );
     const { 
-        data : { data, appendData },
+        data : { data, setData, appendData },
         flags : { loading, setSliceRows, setLoading, },
         pages : { itemCount, setItemCount },
         provider : { lastVisible },
@@ -19,6 +19,10 @@ const GridFeedProvider = ( { count, fetch } ) => {
         // Tell Grid.Rows not to slice the data since we're not paginating the view.
         setSliceRows( false );
         //
+        // Clear existing data.
+        setData( [] );
+        setItemCount( 0 );
+        //
         // Invoke our promises to count and fetch data.
         setLoading( true );
         count( ctx ).then( count => {
@@ -26,11 +30,11 @@ const GridFeedProvider = ( { count, fetch } ) => {
             return fetch( ctx );
         } ).then( data => {
             setChunk( data.length ); // On first chunk of data we update our chunk size.
-            appendData( data );
+            setData( data );
         } ).finally( () => {
             setLoading( false );
         } );
-    }, [] );
+    }, [count,fetch] );
     //
     // As lastVisible changes we should check how close to end of Grid.Rows we are and fetch more if needed.
     React.useEffect( () => {

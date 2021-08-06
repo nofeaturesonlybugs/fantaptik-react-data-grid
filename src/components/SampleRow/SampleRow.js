@@ -11,12 +11,25 @@ const SampleColumn = ( { column, row, index, onSized } ) => {
     const ref = React.useRef( null );
     React.useEffect( () => {
         if( ref !== null && ref.current !== null ) {
-            const { borderBox : { width, height } } = getBox( ref.current );
-            onSized && onSized( index, { ...column, width, height } );
+            let { borderBox : { width, height } } = getBox( ref.current );
+            // NB: react-window requires explicit pixel measurements of the cells.  When calculating width we need to
+            // go "a bit wider" than getBox() returns.  Since the calculated height is going to depend on the font-size
+            // we can increase the width by the height to get a little extra wider according to font size.
+            // Within <Rows /> we add a bit of padding-left and padding-right, also based on height, and also specify
+            // whitespace : nowrap.  The result is a fairly nice tabular format.
+            width = Math.ceil( width + height + 1 );
+            height = Math.ceil( height + 1 );
+            onSized && onSized( index, { ...column, width, height, } );
         }
     }, [ref.current] );
     const style = {
-        display : "inline-block",
+        position : "absolute",
+        top : "-1000px",
+        right : "-1000px",
+        whiteSpace : "nowrap",
+        visiblity : "hidden",
+        width : "auto",
+        height : "auto",
     }
     return (
         <div ref={ref} style={style}>{row[column.name]}</div>
@@ -29,18 +42,34 @@ const SampleRow = ( { row, onSized, ...props } ) => {
     // TODO SampleRow might be better written as an <AutoSizer columns={columns} onSized={(index, box) => ...} />
     //      where each box calls an onSized handler providing both the index and box and can then be used as a direct
     //      mutator into the useColumns() hook.
-    const initColumns = getColumns( row, ucwords );
-    if( initColumns.length === 0 ) {
-        return null;
-    }
-    const [columns, setColumns] = React.useState( initColumns );
+    //
+    //
+    // Unix millis is used as part of component keys to cause a re-render when `row` changes.
+    const [time, setTime] = React.useState( 0 );
+    const [columns, setColumns] = React.useState( [] );
     //
     // Create a data row acting as the column labels.
     const header = {};
     columns.map( column => header[ column.name ] = column.label );
     // We render both a data and header for each column and delay our onSized event until all
     // children have rendered so here we keep track of pending renders.
-    const [pending, setPending] = React.useState( 2 * columns.length );
+    const [pending, setPending] = React.useState( -1 );
+    //
+    React.useEffect( () => {
+        // When the sample row changes we need to recalculate columns.
+        //
+        const columns = getColumns( row, ucwords );
+        if( columns.length === 0 ) {
+            setColumns( [] );
+            setPending( -1 );
+            return;
+        }
+        setColumns( columns );
+        setPending( 2 * columns.length );
+        //
+        // Set new Unix millis so children re-render and cause measuring.
+        setTime( (new Date()).getTime() );
+    }, [row] );
     //
     const handlers = {
         sized : (index, column) => {
@@ -70,12 +99,15 @@ const SampleRow = ( { row, onSized, ...props } ) => {
     //
     const elems = [];
     columns.map( (column, index) => {
-        elems.push( <SampleColumn key={"c"+index} column={column} row={header} index={index} onSized={handlers.sized} /> );
-        elems.push( <SampleColumn key={"r"+index} column={column} row={row} index={index} onSized={handlers.sized} /> );
+        elems.push( <SampleColumn key={"c"+index+"."+time} column={column} row={header} index={index} onSized={handlers.sized} /> );
+        elems.push( <SampleColumn key={"r"+index+"."+time} column={column} row={row} index={index} onSized={handlers.sized} /> );
     } );
     const style = {
         overflow : "hidden",
         height : "0px",
+        width : "auto",
+        whiteSpace : "nowrap",
+        visiblity : "hidden",
     }
     return (
         <div style={style} {...props}>{elems}</div>
@@ -90,7 +122,7 @@ const ContextSampleRow = ( props ) => {
         },
     }
     const passthru = {
-        row : { ...sample },
+        row : sample,
         onSized : handlers.sized,
     };
     return (

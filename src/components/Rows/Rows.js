@@ -62,6 +62,10 @@ const Rows = ( {
         style = {
             ...style,
             lineHeight : style.height + "px",
+            overflow : "hidden",
+            whitespace : "nowrap",
+            paddingLeft : Math.ceil( style.height * .2 ) + "px",
+            paddingRight : Math.ceil( style.height * .2 ) + "px",
         };
         return (
             <div className="row" style={style}>{value}</div>

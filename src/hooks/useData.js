@@ -18,6 +18,7 @@ import React from 'react';
  * @property {Object} sample    The sample row.
  * @property {function} appendData      `result.appendData( [{...}, {...}] );           // Append 2 new rows.`
  * @property {function} setData         `result.setData( [{...}, {...}, {...}] );       // Set data to these rows.`
+ * @property {function} setSample       `result.setSample( {...} );                     // Recalculate columns from new sample row.`
  */
 
 /**
@@ -62,7 +63,7 @@ const useData = ( {
     //
     return {
         data, appendData, setData,
-        sample,
+        sample, setSample,
     };
 }
 
@@ -76,7 +77,7 @@ const useData = ( {
  */
 export const useDataDefaultResult = {
     data : [], appendData : data => null, setData : data => null,
-    sample : null,
+    sample : null, setSample : sample => null,
 }
 
 useData.defaultResult = useDataDefaultResult;
