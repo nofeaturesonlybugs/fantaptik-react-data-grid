@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getBox } from 'css-box-model';
 
-import { ucwords } from '../../js';
+import { getColumns, ucwords } from '../../js';
 
 import GridContext from '../Grid/context';
 
