@@ -1,5 +1,5 @@
 import { promise } from '@fantaptik/core';
-import { Toggle } from '@fantaptik/react-material';
+import { Checkbox, Toggle } from '@fantaptik/react-material';
 
 import data from './mock/mock-data';
 
@@ -17,6 +17,7 @@ import Rows from './src/components/Rows/Rows';
 import SampleRow from './src/components/SampleRow/SampleRow';
 
 global.promise = promise;
+global.Checkbox = Checkbox;
 global.Toggle = Toggle;
 
 global.dataSample = {

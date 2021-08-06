@@ -12,5 +12,11 @@ module.exports = {
             margin : '0px !important',
             lineHeight : '1.5rem !important',
         }
+    },
+    List : {
+        li : {
+            marginLeft : '3rem',
+            listStyle : 'circle !important',
+        }
     }
 }

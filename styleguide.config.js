@@ -24,6 +24,8 @@ module.exports = {
     ignore : [
         '**/components/**/common.js',
         '**/components/**/context.js',
+        //
+        'src/components/GridFeed/Progress.*',
     ],
 
     //
