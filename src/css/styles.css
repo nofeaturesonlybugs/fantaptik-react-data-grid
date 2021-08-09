@@ -125,3 +125,17 @@ div.data-grid-columns {
     opacity : .15;
     z-index : 1000;
 }
+
+/**
+ * Data grid progress displays.
+ */
+.data-grid-progress .progress {
+    position : absolute;
+    left : 0;
+    top : 0;
+}
+
+.data-grid-progress .scroll-progress.progress .determinate {
+    background-color : #fff176  ;
+    opacity : .77;
+}

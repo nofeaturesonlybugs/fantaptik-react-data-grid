@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import GridContext from './context';
+import GridContext from '../Grid/context';
 
-const GridFeedProvider = ( { count, fetch } ) => {
+import Progress from './Progress';
+
+const Provider = ( { count, fetch } ) => {
     const ctx = React.useContext( GridContext );
     const { 
         data : { data, setData, appendData },
@@ -62,8 +64,10 @@ const GridFeedProvider = ( { count, fetch } ) => {
     return <div style={style} />
 }
 
-GridFeedProvider.displayName = "Grid.FeedProvider";
-GridFeedProvider.propTypes = {
+Provider.Progress = Progress;
+
+Provider.displayName = "Grid.FeedProvider";
+Provider.propTypes = {
     /**
      * Callback that returns a Promise that resolves after counting data records.  
      * `count( GridContext ).then( countResult => console.log( "there are", countResult, " record(s)" ) );`
@@ -77,4 +81,4 @@ GridFeedProvider.propTypes = {
     fetch : PropTypes.func.isRequired,
 }
 
-export default GridFeedProvider;
+export default Provider;

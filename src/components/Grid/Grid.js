@@ -8,7 +8,7 @@ import useDataGrid from '../../hooks/useDataGrid';
 import Context from './context';
 import GridHeader from './GridHeader';
 import GridFooter from './GridFooter';
-import GridFeedProvider from './GridFeedProvider';
+import GridFeedProvider from '../GridFeed/Provider';
 import GridPagesProvider from './GridPagesProvider';
 import Buttons from '../Buttons/Buttons';
 import Page from '../Page/Page';

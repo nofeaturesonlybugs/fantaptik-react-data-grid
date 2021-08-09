@@ -48,3 +48,11 @@ div.data-grid-rows {}               /* Data grid rows div. */
 div.page-label {}                   /* Viewing page X of Y label. */
 div.per-page-label {}               /* Viewing record X of Y of Z label. */
 ```
+
+##### Progress Indicators
+```css
+div.data-grid-progress {}                   /* Container div for progress bars. */
+div.data-grid-progress .scroll-progress {}  /* Bar that indicates scroll progress in rows. */
+div.data-grid-progress .loaded-progress {}  /* Bar that indicates loaded progress in rows. */
+div.data-grid-progress .loading {}          /* Bar displayed when rows are loading. */
+```
