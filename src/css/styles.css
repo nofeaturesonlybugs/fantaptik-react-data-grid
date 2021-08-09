@@ -84,6 +84,17 @@ div.per-page .per-page-select ul li {
 }
 
 /**
+ * Labels
+ */
+div.page-label {
+    display: inline-block;
+}
+
+div.per-page-label {
+    display: inline-block;
+}
+
+/**
  * Data grid columns
  */
 div.data-grid-columns {
@@ -113,4 +124,18 @@ div.data-grid-columns {
     background-color : #aaaaaa;
     opacity : .15;
     z-index : 1000;
+}
+
+/**
+ * Data grid progress displays.
+ */
+.data-grid-progress .progress {
+    position : absolute;
+    left : 0;
+    top : 0;
+}
+
+.data-grid-progress .scroll-progress.progress .determinate {
+    background-color : #fff176  ;
+    opacity : .77;
 }

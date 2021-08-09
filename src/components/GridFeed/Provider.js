@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import GridContext from './context';
+import GridContext from '../Grid/context';
 
-const GridFeedProvider = ( { count, fetch } ) => {
+import Progress from './Progress';
+
+const Provider = ( { count, fetch } ) => {
     const ctx = React.useContext( GridContext );
     const { 
-        data : { data, appendData },
+        data : { data, setData, appendData },
         flags : { loading, setSliceRows, setLoading, },
         pages : { itemCount, setItemCount },
         provider : { lastVisible },
@@ -19,6 +21,10 @@ const GridFeedProvider = ( { count, fetch } ) => {
         // Tell Grid.Rows not to slice the data since we're not paginating the view.
         setSliceRows( false );
         //
+        // Clear existing data.
+        setData( [] );
+        setItemCount( 0 );
+        //
         // Invoke our promises to count and fetch data.
         setLoading( true );
         count( ctx ).then( count => {
@@ -26,11 +32,11 @@ const GridFeedProvider = ( { count, fetch } ) => {
             return fetch( ctx );
         } ).then( data => {
             setChunk( data.length ); // On first chunk of data we update our chunk size.
-            appendData( data );
+            setData( data );
         } ).finally( () => {
             setLoading( false );
         } );
-    }, [] );
+    }, [count,fetch] );
     //
     // As lastVisible changes we should check how close to end of Grid.Rows we are and fetch more if needed.
     React.useEffect( () => {
@@ -58,8 +64,10 @@ const GridFeedProvider = ( { count, fetch } ) => {
     return <div style={style} />
 }
 
-GridFeedProvider.displayName = "Grid.FeedProvider";
-GridFeedProvider.propTypes = {
+Provider.Progress = Progress;
+
+Provider.displayName = "Grid.FeedProvider";
+Provider.propTypes = {
     /**
      * Callback that returns a Promise that resolves after counting data records.  
      * `count( GridContext ).then( countResult => console.log( "there are", countResult, " record(s)" ) );`
@@ -73,4 +81,4 @@ GridFeedProvider.propTypes = {
     fetch : PropTypes.func.isRequired,
 }
 
-export default GridFeedProvider;
+export default Provider;

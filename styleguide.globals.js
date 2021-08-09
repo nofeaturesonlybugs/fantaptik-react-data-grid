@@ -1,23 +1,24 @@
 import { promise } from '@fantaptik/core';
+import { Checkbox, Toggle } from '@fantaptik/react-material';
 
 import data from './mock/mock-data';
 
 import conf from './src/conf/conf';
 
 import { getColumns, jsonPrintFunction, ucwords } from './src/js';
-// import { getColumns, jsonPrintFunction, reject, resolve, ucwords } from './src/js'; // TODO RM
 import { useColumns, useData, useDataGrid, usePages, useProvider } from './src/hooks';
 
 import Buttons from './src/components/Buttons/Buttons';
 import ColumnOrder from './src/components/ColumnOrder/ColumnOrder';
 import Grid from './src/components/Grid/Grid';
-import Labels from './src/components/Labels/Labels';
 import Page from './src/components/Page/Page';
 import PerPage from './src/components/PerPage/PerPage';
 import Rows from './src/components/Rows/Rows';
 import SampleRow from './src/components/SampleRow/SampleRow';
 
 global.promise = promise;
+global.Checkbox = Checkbox;
+global.Toggle = Toggle;
 
 global.dataSample = {
     id              : 999999,
@@ -57,7 +58,6 @@ global.useProvider = useProvider;
 global.Buttons = Buttons;
 global.ColumnOrder = ColumnOrder;
 global.Grid = Grid;
-global.Labels = Labels;
 global.Page = Page;
 global.PerPage = PerPage;
 global.Rows = Rows;

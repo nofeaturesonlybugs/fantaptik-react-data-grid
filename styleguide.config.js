@@ -24,6 +24,8 @@ module.exports = {
     ignore : [
         '**/components/**/common.js',
         '**/components/**/context.js',
+        //
+        'src/components/GridFeed/Progress.*',
     ],
 
     //
@@ -57,30 +59,6 @@ module.exports = {
             components : 'src/components/**/*.js',
             sectionDepth : 1,
         },
-        // {
-        //     name : 'Forms',
-        //     content : 'src/forms/forms.md',
-        //     components : 'src/forms/**/*.js',
-        //     sectionDepth : 1,
-        // },
-        // {
-        //     name : 'Inputs',
-        //     content : 'src/components/inputs/inputs.md',
-        //     components : 'src/components/inputs/**/*.js',
-        //     sectionDepth : 1,
-        // },
-        // {
-        //     name : 'Layout',
-        //     content : 'src/components/layout/layout.md',
-        //     components : 'src/components/layout/**/*.js',
-        //     sectionDepth : 1,
-        // },
-        // {
-        //     name : 'Visual',
-        //     content : 'src/components/visual/visual.md',
-        //     components : 'src/components/visual/**/*.js',
-        //     sectionDepth : 1,
-        // }
     ],
 
     //

@@ -1,5 +1,6 @@
-`Buttons` is a namespace for `Grid`-aware buttons.  All properties on `Buttons` are passed to each child Component.
+`Buttons` acts as a namespace for buttons to use with `Grid`.
 
+All properties on `Buttons` are passed to each child Component.
 ```jsx
 <>
     <Buttons round>

@@ -43,5 +43,8 @@ const fetch = ( ctx ) => {
 <Grid sample={dataSample} style={{ height : "600px" }}>
     <Grid.FeedProvider count={count} fetch={fetch} />
     <Grid.Rows />
+    <Grid.Footer>
+        <Grid.FeedProvider.Progress />
+    </Grid.Footer>
 </Grid>
 ```
