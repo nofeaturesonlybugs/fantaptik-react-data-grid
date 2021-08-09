@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>hooks/usePages.js - Documentation</title>
+    <title>usePages.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -27,12 +27,12 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="hooks.html">hooks</a><ul class='methods'><li data-type='method'><a href="hooks.html#.useColumns">useColumns</a></li><li data-type='method'><a href="hooks.html#.useData">useData</a></li><li data-type='method'><a href="hooks.html#.useDataGrid">useDataGrid</a></li><li data-type='method'><a href="hooks.html#.usePages">usePages</a></li><li data-type='method'><a href="hooks.html#.useProvider">useProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#jsonPrintFunction">jsonPrintFunction</a></li><li><a href="global.html#ucfirst">ucfirst</a></li><li><a href="global.html#ucwords">ucwords</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#useColumns">useColumns</a></li><li><a href="global.html#useColumnsDefaultResult">useColumnsDefaultResult</a></li><li><a href="global.html#useData">useData</a></li><li><a href="global.html#useDataDefaultResult">useDataDefaultResult</a></li><li><a href="global.html#useDataGrid">useDataGrid</a></li><li><a href="global.html#useDataGridDefaultResult">useDataGridDefaultResult</a></li><li><a href="global.html#usePages">usePages</a></li><li><a href="global.html#usePagesDefaultResult">usePagesDefaultResult</a></li></ul>
 </nav>
 
 <div id="main">
     
-    <h1 class="page-title">hooks/usePages.js</h1>
+    <h1 class="page-title">usePages.js</h1>
     
 
     
@@ -44,12 +44,12 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
 
-import { check } from '@fantaptik/core';
+import { checkGte } from '../js';
 
 /**
  * The properties that can be passed to the `usePages` hook.
  * 
- * @typedef hooks.usePagesProps
+ * @typedef usePagesProps
  * @type {Object}
  * @property {number} [page=1] Initial page.
  * @property {number} [perPage=25] Initial perPage.
@@ -59,7 +59,7 @@ import { check } from '@fantaptik/core';
 /**
  * The result type for the `usePages` hook.
  * 
- * @typedef hooks.usePagesResult
+ * @typedef usePagesResult
  * @type {Object}
  * @property {number} perPage       Number of items to display per page.
  * @property {number} page          Current page number.
@@ -79,12 +79,9 @@ import { check } from '@fantaptik/core';
 /**
  * `usePages` creates a pagination management object.
  * 
- * @name hooks.usePages
- * @static
  * @function
- * 
- * @param {hooks.usePagesProps}  Initial `pages` hook props.
- * @returns {hooks.usePagesResult}
+ * @param {usePagesProps}  Initial `pages` hook props.
+ * @returns {usePagesResult}
  */
 const usePages = ( {
     itemCount : __itemCount = 1,
@@ -93,9 +90,9 @@ const usePages = ( {
 } = {} ) => {
     //
     // Our incoming values need to make sense.
-    __itemCount = check.gte( __itemCount, 0 );
-    __page = check.gte( __page, 1 );
-    __perPage = check.gte( __perPage, 1 );
+    __itemCount = checkGte( __itemCount, 0 );
+    __perPage = checkGte( __perPage, 1 );
+    __perPage = checkGte( __perPage, 1 );
     const __total = Math.ceil( __itemCount / __perPage );
     //
     const [itemCount, stateItemCount] = React.useState( __itemCount );
@@ -104,33 +101,33 @@ const usePages = ( {
     const [total, stateTotal] = React.useState( __total );
     //
     const setItemCount = value => {
-        value = check.gte( value, 0 );
+        value = checkGte( value, 0 );
         stateItemCount( value );
         // When changing itemCount we may need to adjust total and/or page.
         const recalcTotal = Math.ceil( value / perPage );
         if( recalcTotal != total ) {
             stateTotal( recalcTotal );
         }
-        const recalcPage = check.gte( page > recalcTotal ? recalcTotal : page, 1 );
+        const recalcPage = page > recalcTotal ? recalcTotal : page;
         if( recalcPage != page ) {
             statePage( recalcPage );
         }
     }
     const setPerPage = value => {
-        value = check.gte( value, 1 );
+        value = checkGte( value, 1 );
         statePerPage( value );
         // When changing perPage we may need to adjust total and/or page.
         const recalcTotal = Math.ceil( itemCount / value );
         if( recalcTotal != total ) {
             stateTotal( recalcTotal );
         }
-        const recalcPage = check.gte( page > recalcTotal ? recalcTotal : page, 1 );
+        const recalcPage = page > recalcTotal ? recalcTotal : page;
         if( recalcPage != page ) {
             statePage( recalcPage );
         }
     }
     const setPage = value => {
-        value = check.gte( value, 1 );
+        value = checkGte( value, 1 );
         if( value > total ) {
             value = total;
         }
@@ -159,10 +156,7 @@ const usePages = ( {
 /**
  * A default `usePagesResult`.
  * 
- * @name hooks.usePagesDefaultResult
- * @static
- * 
- * @type {hooks.usePagesResult}
+ * @type {usePagesResult}
  */
 export const usePagesDefaultResult = {
     perPage : 1, setPerPage : perPage => null,
@@ -193,7 +187,7 @@ export default usePages;</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Aug 09 2021 14:17:01 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Fri Jul 30 2021 16:02:12 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
