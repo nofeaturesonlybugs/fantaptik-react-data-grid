@@ -14,6 +14,9 @@ const Provider = ( { count, fetch } ) => {
         provider : { lastVisible },
     } = ctx;
     //
+    // When reload is true we need to do an initial count+fetch.
+    const [reload, setReload] = React.useState( false );
+    //
     // Chunk size is how big the first data chunk from the server is.
     const [chunk, setChunk] = React.useState( 0 );
     //
@@ -24,23 +27,31 @@ const Provider = ( { count, fetch } ) => {
         // Clear existing data.
         setData( [] );
         setItemCount( 0 );
-        //
-        // Invoke our promises to count and fetch data.
-        setLoading( true );
-        count( ctx ).then( count => {
-            setItemCount( count );
-            return fetch( ctx );
-        } ).then( data => {
-            setChunk( data.length ); // On first chunk of data we update our chunk size.
-            setData( data );
-        } ).finally( () => {
-            setLoading( false );
-        } );
+        setReload( true );
     }, [count,fetch] );
+    //
+    React.useEffect( () => {
+        // This effect used to be combined with the above effect that clears data+itemCount.
+        // They've been split so that the promises are not called until the next render
+        // when itemCount=0 and data=[].
+        if( reload === true ) {
+            setLoading( true );
+            count( ctx ).then( count => {
+                setItemCount( count );
+                return fetch( ctx );
+            } ).then( data => {
+                setChunk( data.length ); // On first chunk of data we update our chunk size.
+                setData( data );
+            } ).finally( () => {
+                setLoading( false );
+                setReload( false );
+            } );
+        }
+    }, [reload] );
     //
     // As lastVisible changes we should check how close to end of Grid.Rows we are and fetch more if needed.
     React.useEffect( () => {
-        if( loading ) {
+        if( loading || reload ) {
             return; // Currently loading (i.e. we have outstanding promises).
         } else if( itemCount === data.length ) {
             return; // Fully loaded
