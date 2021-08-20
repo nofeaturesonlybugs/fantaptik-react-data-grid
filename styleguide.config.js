@@ -26,6 +26,7 @@ module.exports = {
         '**/components/**/context.js',
         //
         'src/components/GridFeed/Progress.*',
+        'src/components/GridFeed/Label.*',
     ],
 
     //
@@ -57,6 +58,12 @@ module.exports = {
             name : 'Components',
             content : 'src/components/components.md',
             components : 'src/components/**/*.js',
+            sectionDepth : 1,
+        },
+        {
+            name : 'Sample Components',
+            content : 'src/sample-components/sample-components.md',
+            components : 'src/sample-components/**/*.js',
             sectionDepth : 1,
         },
     ],

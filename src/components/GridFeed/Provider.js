@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import GridContext from '../Grid/context';
 
+import Label from './Label';
 import Progress from './Progress';
 
 const Provider = ( { count, fetch } ) => {
@@ -75,6 +76,7 @@ const Provider = ( { count, fetch } ) => {
     return <div style={style} />
 }
 
+Provider.Label = Label;
 Provider.Progress = Progress;
 
 Provider.displayName = "Grid.FeedProvider";
