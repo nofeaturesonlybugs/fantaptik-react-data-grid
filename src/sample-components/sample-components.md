@@ -1,0 +1,1 @@
+`sample-components` are small components used throughout the examples.

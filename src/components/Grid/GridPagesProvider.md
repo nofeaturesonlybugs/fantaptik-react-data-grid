@@ -33,7 +33,9 @@ const fetch = ( ctx ) => {
         <Grid.Page />
         <Grid.PagesProvider count={count} fetch={fetch} />
     </div>
-    <Grid.Rows />
+    <Grid.Rows>
+        <Grid.Rows.Renderer column="married" component={MarriedStatus} />
+    </Grid.Rows>
     <div>
         <Grid.Page.Label />
         <Grid.PerPage.Label style={{marginLeft : "10px"}} />
