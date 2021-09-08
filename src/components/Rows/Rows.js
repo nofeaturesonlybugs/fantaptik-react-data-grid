@@ -3,25 +3,59 @@ import PropTypes from 'prop-types';
 
 import { VariableSizeGrid } from 'react-window';
 
-import { check } from '@fantaptik/core';
 import { merge, Position } from '@fantaptik/react-material';
 
-import { getColumns, ucwords } from '../../js';
+import { ucwords } from '../../js';
+
+import GridContext from '../Grid/context';
+import Renderer from './Renderer';
+import Sample from './Sample';
 
 import '../../css/styles.css';
 
-import GridContext from '../Grid/context';
+/**
+ * `MakeCell` is a high order component to create our cell renderer given some contextual values.
+ * 
+ * @ignore
+ * @param {string[]} columns Array of column names.
+ * @param {Object} renderers Hash of renderers by column name.
+ * @param {Object} mergeStyle Pre calculated styles to merge with those given to the element when rendered.
+ * @returns Component
+ */
+const MakeCell = (columns, renderers, mergeStyle) => ( {columnIndex, data, rowIndex, style } ) => {
+    const column = columns[columnIndex];
+    const row = data[rowIndex];
+    const value = row[column];
+    const { component, withProps } = renderers[column] || {};
+    const passthru = {
+        component, withProps,
+        column, index : rowIndex,
+        row, rows : data, value,
+        style : { ...style, ...mergeStyle },
+    };
+    return (
+        <Renderer {...passthru} />
+    );
+}
 
 const Rows = ( { 
-    cellWidth,
-    columnTransform,
-    rowHeight,
-    loading,
     className,
+    style,
+    //
+    height,
+    width,
+    //
+    children, 
+    //
     columns,
     data,
-    width, height,
+    header : __header,
+    sample,
+    //
+    loading,
+    //
     onItemsRendered,
+    //
     ...props
 } ) => {
     //
@@ -40,115 +74,149 @@ const Rows = ( {
         setRowsRef( node );
     }, [] );
     //
-    // Whenever columns changes we need to throw away the react-window cache of sizing.  We do this early in the component
-    // because if we wait until *after* Array.isArray(columns) then we will throw away the cache on every render if columns
-    // are not provided.
-    React.useEffect( () => {
+    const [sizes, setSizes] = React.useState( null );
+    //
+    // Whenever getWidth or getHeight change we tell the react-window to reset its internally cached sizes.
+    React.useLayoutEffect( () => {
         if( headerRef ) {
             headerRef.resetAfterIndices( { columnIndex: 0, rowIndex: 0 } );
+        }
+        if( rowsRef ) {
             rowsRef.resetAfterIndices( { columnIndex: 0, rowIndex: 0 } );
         }
-    }, [columns, headerRef, rowsRef] );
+    }, [sizes, headerRef, rowsRef] );
     //
-    // Coerce data to an array.
-    data = Array.isArray( data ) ? data : [];
+    // Get custom renderers from our children.
+    const renderers = React.useMemo( () => {
+        const found = {}
+        React.Children.map( children, child => {
+            if( child.type !== Renderer ) {
+                return;
+            }
+            const { column, component, withProps } = child.props;
+            found[ column ] = { component, withProps };
+        } );
+        return found;
+    }, [children] );
     //
-    // If columns is not provided or not an array we'll gather them from the first available row with the useColumns hook.
-    if( ! Array.isArray( columns ) ) {
-        columns = getColumns( data.length > 0 ? data[0] : {}, columnTransform );
-        columns.map( column => column.width = check.gte( column.width, cellWidth ) );
-    } else {
-        columns.map( column => column.width = column.width > 0 ? column.width : cellWidth );
-    }
-    // 
-    // Filter down to visible columns.
-    columns = columns.filter( column => column.visible === true );
-    //
-    // Since we render two react-windows (headers + data) we need to create a data "row" that acts as the header.
-    const header = {};
-    columns.map( column => header[ column.name ] = column.label );
+    const header = React.useMemo( () => {
+        if( typeof __header === "function" ) {
+            const obj = {};
+            columns.map( column => {
+                obj[ column ] = __header( column );
+            } );
+            return obj;
+        }
+        const obj = {};
+        columns.map( column => {
+            obj[ column ] = ucwords( column );
+        } );
+        return Object.assign( obj, __header );
+    }, [columns, __header] );
     //
     // TODO Better way to get id|key from items.
     const itemKey = ( { columnIndex, data, rowIndex } ) => {
         return "r" + rowIndex + ".c" + columnIndex;
     }
     //
-    // Row renderer because it needs access to columns; might be able to move later.
-    const Row = ( { columnIndex, data, rowIndex, style = {}, ...props } ) => {
-        let value = data[rowIndex][columns[columnIndex].name];
-        style = {
-            ...style,
-            lineHeight : style.height + "px",
-            overflow : "hidden",
-            whitespace : "nowrap",
-            paddingLeft : Math.ceil( style.height * .2 ) + "px",
-            paddingRight : Math.ceil( style.height * .2 ) + "px",
+    const handlers = React.useMemo( () => {
+        return {
+            // items is attached to the data rows and called when items are rendered.
+            items : ( { visibleRowStartIndex : first, visibleRowStopIndex : last } ) => {
+                onItemsRendered && onItemsRendered( { first, last } );
+            },
+            // scroll is attached to the data rows grid and updates the column header's grid scroll position.
+            scroll : ( { scrollLeft } ) => {
+                if( headerRef ) {
+                    headerRef.scrollTo( { scrollLeft, scrollTop : 0 } );
+                }
+            },
+            // sized is called when the sample is done measuring
+            sized : sizes => setSizes( sizes ),
         };
-        return (
-            <div className="row" style={style}>{value}</div>
-        );
-    }
+    }, [headerRef, onItemsRendered] );
     //
-    const handlers = {
-        // items is attached to the data rows and called when items are rendered.
-        items : ( { visibleRowStartIndex : first, visibleRowStopIndex : last } ) => {
-            onItemsRendered && onItemsRendered( { first, last } );
-        },
-        // scroll is attached to the data rows grid and updates the column header's grid scroll position.
-        scroll : ( { scrollLeft } ) => {
-            if( headerRef ) {
-                headerRef.scrollTo( { scrollLeft, scrollTop : 0 } );
-            }
-        },
-    }
+    // Size information and functions.
+    const { rowHeight, getHeight, getWidth, cellMergeStyle } = React.useMemo( () => {
+        if( sizes === null ) {
+            return {
+                rowHeight : 26,
+                getHeight : n => 26,
+                getWidth : n => 200,
+                cellMergeStyle : {},
+            };
+        }
+        const { maxHeight : rowHeight, getHeight, getWidth, style : cellMergeStyle } = sizes;
+        return { rowHeight, getHeight, getWidth, cellMergeStyle };
+    }, [sizes] );
     //
+    // Make our components that render headers and cells.
+    const { header : CellHeaderRenderer, cell : CellRenderer } = React.useMemo( () => {
+        return {
+            header : React.memo( MakeCell( columns, {}, cellMergeStyle ) ),
+            cell : React.memo( MakeCell( columns, renderers, cellMergeStyle ) ),
+        };
+    }, [columns, renderers, cellMergeStyle] );
+    //
+    // A loading overlay.
     let loadingComponent = null;
     if( loading ) {
         loadingComponent = (
-            <Position target=".data-grid-rows" put="top-left" at="top-left" sameWidth={true} sameHeight={true}>
-                <div className="data-grid-loading" />
+            <Position target={[".rows-container .rows", ".rows-container"]} put="top-left" at="top-left" sameWidth={true} sameHeight={true}>
+                <div className="loading" />
             </Position>
         );
     }
     //
     const classes = {
-        rows : merge`${className} data-grid-rows`,
-        columns : merge`${className} data-grid-columns`,
+        container : merge`${className} rows-container`,
+        columns : merge`${className} columns`,
+        rows : merge`${className} rows`,
     }
+    const styles = {
+        container : {
+            ...style,
+            width : width + "px",
+            height : height + "px",
+        }
+    }
+    //
     return (
-        <>
+        <div className={classes.container} style={styles.container} {...props}>
+            <Sample columns={columns} header={header} row={sample} renderers={renderers} onSized={handlers.sized} />
             <VariableSizeGrid
                 ref={headerCallback}
                 className={classes.columns}
                 height={rowHeight} width={width}
-                columnCount={columns.length} columnWidth={n => columns[n].width}
-                rowCount={1} rowHeight={n => rowHeight}
+                columnCount={columns.length} columnWidth={getWidth}
+                rowCount={1} rowHeight={getHeight}
                 itemKey={itemKey} itemData={[header]}
+                overscanColumnCount={columns.length}
                 >
-                {Row}
+                {CellHeaderRenderer}
             </VariableSizeGrid>
             <VariableSizeGrid
                 ref={rowsCallback}
                 className={classes.rows}
-                {...props}
                 height={height - rowHeight} width={width}
-                columnCount={columns.length} columnWidth={n => columns[n].width}
-                rowCount={data.length} rowHeight={n => rowHeight}
+                columnCount={columns.length} columnWidth={getWidth}
+                rowCount={data.length} rowHeight={getHeight}
                 itemKey={itemKey} itemData={data}
                 onItemsRendered={handlers.items}
                 onScroll={handlers.scroll}
+                overscanRowCount={26}
                 >
-                {Row}
+                {CellRenderer}
             </VariableSizeGrid>
             {loadingComponent}
-        </>
+        </div>
     );
 }
 
 const ContextRows = ( { onItemsRendered, ...props } ) => {
     const { 
-        columns : { columns },
-        data : { data },
+        columns : { names : columns },
+        data : { data, sample },
         flags: { pageLoading, sliceRows },
         pages : { slice },
         provider : { setFirstVisible, setLastVisible },
@@ -156,6 +224,7 @@ const ContextRows = ( { onItemsRendered, ...props } ) => {
     //
     const passthru = {
         data : sliceRows === true ? slice( data ) : data,
+        sample,
         loading : pageLoading,
         onItemsRendered : ev => {
             onItemsRendered && onItemsRendered( ev );
@@ -171,71 +240,68 @@ const ContextRows = ( { onItemsRendered, ...props } ) => {
     );
 }
 
+Rows.Renderer = Renderer;
+Rows.Sample = Sample;
+
+ContextRows.Renderer = Renderer;
+ContextRows.Sample = Sample;
 Rows.ContextRows = ContextRows;
 
 Rows.propTypes = {
-    /**
-     * An array of columns.  
-     * Columns are displayed in the order of this array.  
-     * `column.width` has higher precedence than `cellWidth` property.  
-     * `column.label` has higher precedence than `columnTransform` property.  
-     * If not provided then one will be generated from first record in `data`.
-     */
-    columns : PropTypes.arrayOf( PropTypes.shape( {
-        /** Column name. */
-        name : PropTypes.string.isRequired,
-        /** Friendly label. */
-        label : PropTypes.string.isRequired,
-        /** `true` if visible. */
-        visible : PropTypes.bool.isRequired,
-        /** Column width. */
-        width : PropTypes.number.isRequired,
-        /** Column height. */
-        height : PropTypes.number.isRequired,
-    } ) ),
-
-    /** The data rows to display. */
-    data : PropTypes.arrayOf( PropTypes.object ),
-
     /** Specifies the height of the rows in pixels. */
     height : PropTypes.number,
 
     /** Specifies the width of the rows in pixels. */
     width : PropTypes.number,
 
+    /**
+     * An array of columns names; columns are rendered in the order of this array.  
+     */
+    columns : PropTypes.arrayOf( PropTypes.string ).isRequired,
+
+    /** The data rows to display. */
+    data : PropTypes.arrayOf( PropTypes.object ),
+
+    /**
+     * `header` provides a mechanism to set column headings.  
+     * 
+     * By default column headings are generated with `ucwords`.  If `header` is a func
+     * then it is called as `column => label` to get the appropriate label.  No merging is performed.
+     * 
+     * If `header` is an object then it is merged with the generated data where keys in
+     * `header` override the generated value.
+     * 
+     * If you wish to set a column header to empty then either return empty string for the function
+     * or set the column name to `""` in the object.
+     */
+    header : PropTypes.oneOfType( [
+        PropTypes.objectOf( PropTypes.string ),
+        PropTypes.func,
+    ] ),
+
+    /** The sample data row. */
+    sample : PropTypes.object,
+
     /** When `true` a loading modal is displayed over the rows. */
     loading : PropTypes.bool,
-
-    /** Cell width applied when a column has no `width` field or `columns` is empty. */
-    cellWidth : PropTypes.number,
-
-    /** 
-     * Transform function applied when a column has no `label` field or `columns` is empty.  
-     * `str => transformedStr`
-     */
-    columnTransform : PropTypes.func,
-
-    /** Row height. */
-    rowHeight : PropTypes.number,
 
     /**
      * Called as items are rendered.  
      * `onItemsRendered={ ({ first, last }) => console.log("first index",first,"last index",last)}`
      */
     onItemsRendered : PropTypes.func,
-}
 
+}
 Rows.defaultProps = {
-    columns : null,
     data : [],
-    height : 600,
-    width : 800,
+    sample : {},
 
     loading : false,
 
-    cellWidth : 150,
-    columnTransform : ucwords,
-    rowHeight : 35,
+    height : 600,
+    width : 800,
+
+    style : {},
 }
 
 export default Rows;

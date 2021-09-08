@@ -1,10 +1,8 @@
 `ColumnOrder` controls the ordering and toggling of columns.
 
 ```jsx
-// getColumns iterates an object and returns Array{ name : "", label : "" }
-const initColumns = getColumns( data.length > 0 ? data[0] : {} );
-// useColumns accepts the result from getColumns() and creates a nice hook for us.
-const columns = useColumns( { columns : initColumns } );
+// The result of statRow can be passed directly to useColumns.
+const columns = useColumns( statRow( dataSample, ucwords ) );
 const style = {
     maxWidth : "210px",
 };

@@ -1,20 +1,18 @@
 /**
- * `getColumns` accepts a data row and returns a `column[]`.  
+ * `statRow` examines a data row to return a `hooks.useColumnsProp` type.
  * 
- * @function
  * @param {Object} row A data row.
  * @param {function} transform Function to transform column name; `name => name.toLowerCase()`.
- * @returns {column[]}
+ * @returns {hooks.useColumnsProps}
  */
-export const getColumns = ( row, transform ) => {
-    row = row || {};
-    transform = transform || (name => name);
+export const statRow = ( row, transform ) => {
+    const columns = Object.keys( row );
     //
-    const columns = [];
-    for( const key of Object.keys( row ) ) {
-        columns.push( { name : key, label : transform( key ), width : 0, height : 0, visible : true } );
-    }
-    return columns;
+    const header = {};
+    transform = transform || (name => name);
+    columns.map( column => header[column] = transform( column ) );
+    //
+    return { columns, header };
 }
 
 /**
@@ -53,7 +51,7 @@ export const ucfirst = ( [ first, ...rest ] ) => first.toLocaleUpperCase( naviga
 export const ucwords = str => typeof( str ) !== "string" ? "" : str.split( /[ _-]+/g ).map( ucfirst ).join( ' ' );
 
 export default { 
-    getColumns, 
     jsonPrintFunction, 
+    statRow,
     ucfirst, ucwords,
 };

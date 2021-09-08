@@ -1,18 +1,18 @@
 /**
  * ColumnOrder control.
  */
-div.column-order .column {
+.column-order .column {
     position: relative;
     border-radius: 12px;
     background-color: #ededed;
     padding: 4px;
 }
 
-div.column-order .column.no-show span {
+.column-order .column.no-show span {
     color : #ababab;
 }
 
-div.column-order .column:not(:first-child) {
+.column-order .column:not(:first-child) {
     margin-top: 4px;
 }
 
@@ -38,7 +38,7 @@ div.column-order .column:not(:first-child) {
  * Page selection control.
  */
 
-div.page {
+.page {
     display : inline-block;
 }
 
@@ -60,58 +60,69 @@ div.page {
 /**
  * PerPage selection control.
  */
-div.per-page {
+.per-page {
     display: inline-block;
 }
 
-div.per-page > *{
+.per-page > *{
     display: inline-block;
 }
 
-div.per-page .per-page-select {
+.per-page .per-page-select {
     margin-left: 8px;
     margin-right: 8px;
     max-width: 80px;
 }
 
-div.per-page .per-page-select input {
+.per-page .per-page-select input {
     text-align: center;
 }
 
-div.per-page .per-page-select ul,
-div.per-page .per-page-select ul li {
+.per-page .per-page-select ul,
+.per-page .per-page-select ul li {
     text-align: right;
 }
 
 /**
  * Labels
  */
-div.page-label {
+.page-label {
     display: inline-block;
 }
 
-div.per-page-label {
+.per-page-label {
     display: inline-block;
 }
 
 /**
- * Data grid columns
+ * Both header and data cells.
  */
-div.data-grid-columns {
+.rows-container .cell,
+.sample .cell {
+    vertical-align: bottom;
+}
+
+/**
+ * Rows column headers.
+ */
+ .rows-container .columns,
+ .sample .columns.cell {
     overflow: hidden !important;
     background-color: #f6f6f6;
     color: #424242;
     font-weight: bold;
-    vertical-align: bottom;
-    border: 1px solid #eeeeee;
+}
+
+.rows-container .columns .cell,
+.sample .columns.cell {
+    border: 1px solid #9c9c9c;
     border-collapse: collapse;
 }
 
 /**
- * Data grid rows.
+ * Rows cells.
  */
-.data-grid-rows .row {
-    vertical-align: bottom;
+ .rows-container .rows .cell {
     border: 1px solid #eeeeee;
     border-collapse: collapse;
 }
@@ -119,7 +130,7 @@ div.data-grid-columns {
 /**
  * Data grid loading overlay.
  */
-.data-grid-loading {
+ .rows-container .loading {
     height : 100%;
     background-color : #aaaaaa;
     opacity : .15;
@@ -127,15 +138,15 @@ div.data-grid-columns {
 }
 
 /**
- * Data grid progress displays.
+ * Grid.FeedProvider progress bars.
  */
-.data-grid-progress .progress {
+.feed-provider .progress {
     position : absolute;
     left : 0;
     top : 0;
 }
 
-.data-grid-progress .scroll-progress.progress .determinate {
+.feed-provider .scroll-progress.progress .determinate {
     background-color : #fff176  ;
     opacity : .77;
 }

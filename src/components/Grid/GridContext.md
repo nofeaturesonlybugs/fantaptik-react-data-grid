@@ -44,7 +44,6 @@ The following components work in either *standalone* or *context aware* mode:
 + `Page`
 + `PerPage`
 + `Rows`
-+ `SampleRow`
 
 In *standalone* mode the components use props and event handlers and are completely unaware of `Grid.Context`.  You can use them for any purpose like you would any other component.
 

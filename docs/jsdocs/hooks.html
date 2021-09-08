@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="hooks.html">hooks</a><ul class='methods'><li data-type='method'><a href="hooks.html#.useColumns">useColumns</a></li><li data-type='method'><a href="hooks.html#.useData">useData</a></li><li data-type='method'><a href="hooks.html#.useDataGrid">useDataGrid</a></li><li data-type='method'><a href="hooks.html#.usePages">usePages</a></li><li data-type='method'><a href="hooks.html#.useProvider">useProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#jsonPrintFunction">jsonPrintFunction</a></li><li><a href="global.html#ucfirst">ucfirst</a></li><li><a href="global.html#ucwords">ucwords</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="hooks.html">hooks</a><ul class='methods'><li data-type='method'><a href="hooks.html#.useColumns">useColumns</a></li><li data-type='method'><a href="hooks.html#.useData">useData</a></li><li data-type='method'><a href="hooks.html#.useDataGrid">useDataGrid</a></li><li data-type='method'><a href="hooks.html#.usePages">usePages</a></li><li data-type='method'><a href="hooks.html#.useProvider">useProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#jsonPrintFunction">jsonPrintFunction</a></li><li><a href="global.html#statRow">statRow</a></li><li><a href="global.html#ucfirst">ucfirst</a></li><li><a href="global.html#ucwords">ucwords</a></li></ul>
 </nav>
 
 <div id="main">
@@ -148,7 +148,7 @@ const grid = useDataGrid();</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line106">line 106</a>
+        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -523,7 +523,7 @@ const grid = useDataGrid();</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line37">line 37</a>
+        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line59">line 59</a>
     </li></ul></dd>
     
 
@@ -1484,7 +1484,7 @@ more data from an API as the user reaches the end of the grid.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line5">line 5</a>
+        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -1593,52 +1593,6 @@ more data from an API as the user reaches the end of the grid.</p>
 
         <tr>
             
-                <td class="name"><code>width</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The width required for DOM elements displaying this column.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>height</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The height required for DOM elements displaying this column.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>visible</code></td>
             
 
@@ -1701,7 +1655,7 @@ more data from an API as the user reaches the end of the grid.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line17">line 17</a>
+        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line13">line 13</a>
     </li></ul></dd>
     
 
@@ -1770,7 +1724,7 @@ more data from an API as the user reaches the end of the grid.</p>
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;column></span>
+<span class="param-type">Array.&lt;string></span>
 
 
             
@@ -1780,7 +1734,30 @@ more data from an API as the user reaches the end of the grid.</p>
 
             
 
-            <td class="description last"><p>Array of <code>column</code>s in the data.</p></td>
+            <td class="description last"><p>Array of column names in the data in the order to be rendered..</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>header</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object.&lt;string, string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A data row representing a table header.</p></td>
         </tr>
 
     
@@ -1793,7 +1770,8 @@ more data from an API as the user reaches the end of the grid.</p>
 
 
 <div class="description usertext">
-    <p>The properties that can be passed to the <code>useColumns</code> hook.</p>
+    <p>The properties that can be passed to the <code>useColumns</code> hook.  Note that the result of <code>statRow</code> can
+be passed directly to this hook.</p>
 </div>
 
 
@@ -1826,7 +1804,7 @@ more data from an API as the user reaches the end of the grid.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line25">line 25</a>
+        <a href="hooks_useColumns.js.html">hooks/useColumns.js</a>, <a href="hooks_useColumns.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -1905,14 +1883,106 @@ more data from an API as the user reaches the end of the grid.</p>
 
             
 
-            <td class="description last"><p>Array of <code>column</code>s in the data in the order to be rendered.</p></td>
+            <td class="description last"><p>Array of combined column information.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>setColumns</code></td>
+                <td class="name"><code>names</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Array of column names; same ordering as <code>columns</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>labels</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Array of column labels; same ordering as <code>columns</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>visibilities</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;bool></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Array of column visibilities; same ordering as <code>columns</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>header</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object.&lt;string, string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A data row representing a table header.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>reset</code></td>
             
 
             <td class="type">
@@ -1928,7 +1998,7 @@ more data from an API as the user reaches the end of the grid.</p>
 
             
 
-            <td class="description last"><p><code>result.setColumns( column[] ); // Set columns to new array.</code></p></td>
+            <td class="description last"><p><code>result.reset( { columns : [], header : {} } ); // Re-initialize the hook with new values.</code></p></td>
         </tr>
 
     
@@ -3708,7 +3778,7 @@ more data from an API as the user reaches the end of the grid.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Aug 09 2021 14:17:01 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Sep 08 2021 11:01:47 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

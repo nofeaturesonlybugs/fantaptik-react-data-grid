@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="hooks.html">hooks</a><ul class='methods'><li data-type='method'><a href="hooks.html#.useColumns">useColumns</a></li><li data-type='method'><a href="hooks.html#.useData">useData</a></li><li data-type='method'><a href="hooks.html#.useDataGrid">useDataGrid</a></li><li data-type='method'><a href="hooks.html#.usePages">usePages</a></li><li data-type='method'><a href="hooks.html#.useProvider">useProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#jsonPrintFunction">jsonPrintFunction</a></li><li><a href="global.html#ucfirst">ucfirst</a></li><li><a href="global.html#ucwords">ucwords</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="hooks.html">hooks</a><ul class='methods'><li data-type='method'><a href="hooks.html#.useColumns">useColumns</a></li><li data-type='method'><a href="hooks.html#.useData">useData</a></li><li data-type='method'><a href="hooks.html#.useDataGrid">useDataGrid</a></li><li data-type='method'><a href="hooks.html#.usePages">usePages</a></li><li data-type='method'><a href="hooks.html#.useProvider">useProvider</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#jsonPrintFunction">jsonPrintFunction</a></li><li><a href="global.html#statRow">statRow</a></li><li><a href="global.html#ucfirst">ucfirst</a></li><li><a href="global.html#ucwords">ucwords</a></li></ul>
 </nav>
 
 <div id="main">
@@ -44,8 +44,6 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
 
-import { check } from '@fantaptik/core';
-
 /**
  * `column` describes a column.
  * 
@@ -53,17 +51,17 @@ import { check } from '@fantaptik/core';
  * @type {Object}
  * @property {string} name The column name; this would be the lookup key into a data row to get the value.
  * @property {string} label Friendly label when displaying column name to end user.
- * @property {number} width The width required for DOM elements displaying this column.
- * @property {number} height The height required for DOM elements displaying this column.
  * @property {bool} visible `true` if visible; any other value denotes not visible.
  */
 
 /**
- * The properties that can be passed to the `useColumns` hook.
+ * The properties that can be passed to the `useColumns` hook.  Note that the result of `statRow` can
+ * be passed directly to this hook.
  * 
  * @typedef hooks.useColumnsProps
  * @type {Object}
- * @property {column[]} columns Array of `column`s in the data.
+ * @property {string[]} columns Array of column names in the data in the order to be rendered..
+ * @property {Object.&lt;string, string>} header A data row representing a table header.
  */
 
 /**
@@ -71,12 +69,36 @@ import { check } from '@fantaptik/core';
  * 
  * @typedef hooks.useColumnsResult
  * @type {Object}
- * @property {hooks.column[]} columns Array of `column`s in the data in the order to be rendered.
- * @property {function} setColumns      `result.setColumns( column[] ); // Set columns to new array.`
+ * @property {hooks.column[]} columns   Array of combined column information.
+ * @property {string[]} names           Array of column names; same ordering as `columns`.
+ * @property {string[]} labels          Array of column labels; same ordering as `columns`.
+ * @property {bool[]} visibilities      Array of column visibilities; same ordering as `columns`.
+ * @property {Object.&lt;string, string>}  header A data row representing a table header.
+ * @property {function} reset           `result.reset( { columns : [], header : {} } ); // Re-initialize the hook with new values.`
  * @property {function} swap            `result.swap( 2, 3 ); // Swap order of columns with indeces 2 &amp; 3`
  * @property {function} hide            `result.hide( 2 ); // Hide column with index 2`
  * @property {function} show            `result.show( 2 ); // Show column with index 2`
  */
+
+/**
+ * `__init` is an initializer for our useColumns hook.
+ * 
+ * @ignore
+ * @function
+ * @param {hooks.useColumnsProps} props Initial props.
+ * @returns {Object}
+ */
+const __init = ( { columns = [], header = {} } = {} ) => {
+    columns = Array.isArray( columns ) ? columns : [];
+    columns = columns.map( column => {
+        return {
+            name : column,
+            label : header[ column ] || "",
+            visible : true,
+        };
+    } );
+    return { columns, header };
+};
 
 /**
  * `useColumns` creates a columns management object.
@@ -88,24 +110,11 @@ import { check } from '@fantaptik/core';
  * @param {hooks.useColumnsProps} props Initial `columns` hook props.
  * @returns {hooks.useColumnsResult}
  */
-const useColumns = ( { 
-    columns : __columns = [],
-} = {} ) => {
-    // fix iterates columns and ensures all properties are set appropriately.
-    const fix = arr => arr.map( column => {
-        let { name = "", label = "", width = 0, height = 0, visible = true } = column;
-        visible = visible === true;
-        //
-        width = check.gte( width, 0 );
-        height = check.gte( height, 0 );
-        //
-        return { name, label, width, height, visible };
-    } );
-    const [columns, stateColumns] = React.useState( fix( __columns ) );
+const useColumns = ( props = {} ) => {
+    const { columns : __columns, header : __header } = __init( props );
+    const [columns, setColumns] = React.useState( __columns );
+    const [header, setHeader] = React.useState( __header );
     //
-    const setColumns = value => {
-        stateColumns( fix( value ) );
-    }
     const swap = (a,b) => {
         a = parseInt( a, 10 );
         b = parseInt( b, 10 );
@@ -120,32 +129,54 @@ const useColumns = ( {
         const newColumns = [ ...columns ];
         newColumns[a] = n;
         newColumns[b] = m;
-        stateColumns( newColumns );
+        setColumns( newColumns );
+    }
+    const setVisible = (a, visible) => {
+        a = parseInt( a, 10 );
+        if( a &lt; 0 || a > (columns.length - 1) || columns[a].visible === visible ) {
+            return;
+        }
+        columns[a] = { ...columns[a], visible };
+        setColumns( [ ...columns ] );
     }
     const hide = a => {
-        a = parseInt( a, 10 );
-        if( a &lt; 0 || a > (columns.length - 1) || columns[a].visible !== true ) {
-            return;
-        }
-        columns[a] = { ...columns[a], visible : false };
-        stateColumns( [ ...columns ] );
+        setVisible( a, false );
     }
     const show = a => {
-        a = parseInt( a, 10 );
-        if( a &lt; 0 || a > (columns.length - 1) || columns[a].visible !== false ) {
-            return;
-        }
-        columns[a] = { ...columns[a], visible : true };
-        stateColumns( [ ...columns ] );
+        setVisible( a, true );
+    }
+    const reset = props => {
+        const { columns : __columns, header : __header } = __init( props );
+        setColumns( __columns );
+        setHeader( __header );
     }
     //
+    const { names, labels, visibilities } = React.useMemo( () => {
+        const names = [];
+        const labels = [];
+        const visibilities = [];
+        columns.map( c => {
+            names.push( c.name );
+            labels.push( c.label );
+            visibilities.push( c.visible );
+        } );
+        return { names, labels, visibilities };
+    }, [columns] );
+    //
     return {
-        columns, setColumns,
+        columns,
+        header,
+        //
+        names,
+        labels,
+        visibilities,
+        //
+        reset,
         swap,
         hide,
         show,
     };
-}
+};
 
 /**
  * A default `useColumnsResult`.
@@ -156,11 +187,15 @@ const useColumns = ( {
  * @type {hooks.useColumnsResult}
  */
 export const useColumnsDefaultResult = {
-    columns : [], setColumns : columns => null,
+    columns : [],
+    header : {},
+    //
+    names : [], labels : [], visibilities : [],
+    //
+    reset : ( useColumnsProps ) => null,
     swap : (a,b) => null,
     hide : a => null,
     show : a => null,
-
 }
 
 useColumns.defaultResult = useColumnsDefaultResult;
@@ -179,7 +214,7 @@ export default useColumns;</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Aug 09 2021 14:17:01 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Sep 08 2021 11:01:47 GMT-0700 (Pacific Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
